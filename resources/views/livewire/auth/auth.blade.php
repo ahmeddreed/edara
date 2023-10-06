@@ -10,7 +10,15 @@
             </div>
         </div>
         <div class="col-lg-7 mx-auto ">
-            <x-auth.login></x-auth.login>
+            @if($action == "login")
+                <x-auth.login></x-auth.login>
+            @elseif($action == "customer login")
+                <x-auth.login></x-auth.login>
+            @elseif($action == "customer register")
+                <x-auth.login></x-auth.login>
+            @else
+
+            @endif
         </div>
     </div>
     {{-- The whole world belongs to you. --}}
