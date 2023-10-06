@@ -1,0 +1,29 @@
+body{
+    font-family:'cursive';
+}
+
+.bg{
+    background: #0097B2;
+    color: #f6f6f7;
+}
+
+
+.color{
+    color: #0097B2;
+}
+
+
+.w-full{
+    width: 100%;
+}
+
+
+.h-full{
+    height: 100%;
+}
+
+.option:hover{
+    background: #0097B2;
+    color: #f6f6f7;
+}
+
