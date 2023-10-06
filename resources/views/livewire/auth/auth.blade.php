@@ -13,9 +13,9 @@
             @if($action == "login")
                 <x-auth.login></x-auth.login>
             @elseif($action == "customer login")
-                <x-auth.login></x-auth.login>
+                <x-auth.customer-login></x-auth.customer-login>
             @elseif($action == "customer register")
-                <x-auth.login></x-auth.login>
+                <x-auth.customer-register></x-auth.customer-register>
             @else
 
             @endif

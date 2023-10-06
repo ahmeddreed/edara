@@ -2,7 +2,7 @@
 <div class="card shadow color">
     <div class="card-body">
         <h4 class="fw-bold text-center">
-                انشاء حساب عميل
+                 تسجيل الدخول العميل
         </h4>
         <form action="" method="post" class="container my-5">
             <div class="mb-3">
