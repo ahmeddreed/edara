@@ -1,10 +1,9 @@
 <?php
 use App\Livewire\Home;
 use App\Livewire\ItemDetails;
-use App\Livewire\Auth\Login;
+use App\Livewire\Profile;
+use App\Livewire\Invoice;
 use App\Livewire\Auth\Auth;
-use App\Livewire\Auth\CustomerLogin;
-use App\Livewire\Auth\CustomerRegister;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,9 +18,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get("/",Home::class)->name("home");
-Route::get("/login",Auth::class)->name("login");
-Route::get("/customerLogin",CustomerLogin::class)->name("customerLogin");
-Route::get("/customerRegister",CustomerRegister::class)->name("CustomerRegister");
+Route::get("/invoice",Invoice::class)->name("invoice");
+Route::get("/profile",Profile::class)->name("profile");
+Route::get("/Authentication",Auth::class)->name("Authentication");
 Route::get("/detaile/{id}",ItemDetails::class)->name("detaile");
 
 // Route::get('/', function () {

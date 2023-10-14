@@ -6,10 +6,10 @@
       <div class="collapse navbar-collapse " id="navbarSupportedContent">
         <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active text-light fw-bold " aria-current="page" href="{{ route("login") }}">تسجيل الدخول</a>
+            <a class="nav-link active text-light fw-bold " aria-current="page" href="{{ route("Authentication") }}">تسجيل الدخول</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-light fw-bold" href="#">الملف الشخصي</a>
+            <a class="nav-link text-light fw-bold" href="{{ route("profile") }}">الملف الشخصي</a>
           </li>
           <li class="nav-item">
             <a class="nav-link text-light fw-bold" href="#">لوحة التحكم</a>

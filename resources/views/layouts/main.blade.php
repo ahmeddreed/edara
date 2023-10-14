@@ -45,10 +45,11 @@
 
     @yield("content")
 
-    <div class="container mx-auto">
+    <div class="container mx-auto mt-5">
         {{ $slot }}
     </div>
 
+    <br>
         <x-Main.footer></x-Main.footer>
     <!-- End your project here-->
     <script src="{{ asset("js/bootstrap.bundle.js") }}"></script>
