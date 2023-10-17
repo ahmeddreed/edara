@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Invoice extends Model
+class OperationsOnCustomerAccount extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        "t-price",
-        "type",
+        "customer_account_id",
+        "pay",
+        "old_number",
+        "new_number",
         "user_id",
-        "customer_id",
-        "note",
-    ];
+      ];
 }
