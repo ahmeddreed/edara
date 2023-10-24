@@ -26,6 +26,8 @@
         }
 
     </style>
+
+    @livewireStyles
   </head>
 
   <body class="@if(request()->routeIs("login") || request()->routeIs("customerLogin") || request()->routeIs("CustomerRegister")) bg @endif">
@@ -53,6 +55,7 @@
         <x-Main.footer></x-Main.footer>
     <!-- End your project here-->
     <script src="{{ asset("js/bootstrap.bundle.js") }}"></script>
+    @livewireScripts
 </body>
 
 </html>

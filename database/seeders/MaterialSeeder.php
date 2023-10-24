@@ -14,20 +14,20 @@ class MaterialSeeder extends Seeder
     public function run(): void
     {
         Material::create([
-            'title' => fake()->text(),
+            'title' => "Title",
             'price' => 2000,
             'description' => fake()->text(),
-            "image"=>"img/img",
+            "image"=>"img/img.jpg",
             'note' =>"test note",
             'user_id' => 1,
             "category_id" => 1,
         ]);
 
         Material::create([
-            'title' => fake()->text(),
+            'title' => "Title",
             'price' => 2000,
             'description' => fake()->text(),
-            "image"=>"img/img",
+            "image"=>"img/img.jpg",
             'note' =>"test note",
             'user_id' => 1,
             "category_id" => 1,
@@ -36,10 +36,10 @@ class MaterialSeeder extends Seeder
 
 
         Material::create([
-            'title' => fake()->text(),
+            'title' => "Title",
             'price' => 2000,
             'description' => fake()->text(),
-            "image"=>"img/img",
+            "image"=>"img/img.jpg",
             'note' =>"test note",
             'user_id' => 1,
             "category_id" => 2,
@@ -47,10 +47,10 @@ class MaterialSeeder extends Seeder
 
 
         Material::create([
-            'title' => fake()->text(),
+            'title' => "Title",
             'price' => 2000,
             'description' => fake()->text(),
-            "image"=>"img/img",
+            "image"=>"img/img.jpg",
             'note' =>"test note",
             'user_id' => 1,
             "category_id" => 2,
@@ -60,10 +60,10 @@ class MaterialSeeder extends Seeder
 
 
         Material::create([
-            'title' => fake()->text(),
+            'title' => "Title",
             'price' => 2000,
             'description' => fake()->text(),
-            "image"=>"img/img",
+            "image"=>"img/img.jpg",
             'note' =>"test note",
             'user_id' => 1,
             "category_id" => 3,
@@ -71,10 +71,10 @@ class MaterialSeeder extends Seeder
 
 
         Material::create([
-            'title' => fake()->text(),
+            'title' => "Title",
             'price' => 2000,
             'description' => fake()->text(),
-            "image"=>"img/img",
+            "image"=>"img/img.jpg",
             'note' =>"test note",
             'user_id' => 1,
             "category_id" => 3,
@@ -83,10 +83,10 @@ class MaterialSeeder extends Seeder
 
 
         Material::create([
-            'title' => fake()->text(),
+            'title' => "Title",
             'price' => 2000,
             'description' => fake()->text(),
-            "image"=>"img/img",
+            "image"=>"img/img.jpg",
             'note' =>"test note",
             'user_id' => 1,
             "category_id" => 4,

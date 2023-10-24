@@ -1,7 +1,15 @@
 <div class="container my-5" dir="rtl">
-
     <div class="row">
         <div class="col-lg-8 col-md-10 col-sm-12 mx-auto">
+            @if(session()->has("msg_s"))
+                <div class="alert alert-success text-center color" role="alert">
+                    {{ session()->get("msg_s") }}
+                </div>
+            @elseif(session()->has("msg_e"))
+                <div class="alert alert-danger text-center text-light" role="alert">
+                    {{ session()->get("msg_e") }}
+                </div>
+            @endif
             <div class="card shadow">
                 <div class="card-body">
                     <p class="color fs-4 fw-bold text-center">
@@ -19,15 +27,17 @@
                     <div class="tab-content" id="pills-tabContent">
                         <div class="tab-pane fade show active" id="pills-data" role="tabpanel" aria-labelledby="pills-data-tab">
 
-                            <div class="card shadow">
-                                <div class="card-body">
-                                    <div class="row">
+                            <div class="card shadow container">
+                                <div class="card-body ">
+                                    <div class="row text-center">
                                         <div class="col-4">الاسم</div>
-                                        <div class="col-7">احمد دريد</div>
-                                        <div class="col-4">العنوان</div>
-                                        <div class="col-7">07736478136</div>
+                                        <div class="col-7">{{session()->get('customer')->name }}</div>
+                                        <div class="col-4">رقم الهاتف</div>
+                                        <div class="col-7">{{session()->get('customer')->phone }}</div>
                                         <div class="col-4">المحافظة</div>
-                                        <div class="col-7 ">بغداد</div>
+                                        <div class="col-7 ">{{session()->get('customer')->governorate }}</div>
+                                        <div class="col-4">العنوان</div>
+                                        <div class="col-7">{{session()->get('customer')->address }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -41,7 +51,7 @@
                                     <div class="card shadow">
                                         <div class="card-body">
 
-                                            <table class="table">
+                                            <table class="table text-center">
                                                 <thead>
                                                   <tr class="">
                                                     <th scope="col">رقم الفاتورة</th>
