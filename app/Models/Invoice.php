@@ -10,7 +10,7 @@ class Invoice extends Model
     use HasFactory;
 
     protected $fillable = [
-        "t-price",
+        "t_price",
         "type",
         "user_id",
         "customer_id",

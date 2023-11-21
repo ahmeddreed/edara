@@ -40,7 +40,7 @@
         <div class="col-lg-10 mx-auto text-center my-5">
             <div class="card shadow color">
                 <div class="card-body d-flex justify-content-around">
-                    <a href="{{ route("customerLogin") }}" class="btn btn-light px-3 @if(request()->routeIs("customerLogin")) bg @else color  @endif fw-bold">تسجيل الدخول</a>
+                    <a href="{{ route("login") }}" class="btn btn-light px-3 @if(request()->routeIs("login")) bg @else color  @endif fw-bold">تسجيل الدخول الموظفين</a>
                     <a href="{{ route("customerLogin") }}" class="btn btn-light px-3  @if(request()->routeIs("customerLogin")) bg @else color  @endif fw-bold">تسجيل الدخول عميل</a>
                     <a href="{{ route("customerRegister") }}" class="btn btn-light @if(request()->routeIs("customerRegister")) bg @else color  @endif px-3 fw-bold">انشاء حساب عميل</a>
                 </div>

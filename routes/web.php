@@ -1,14 +1,19 @@
 <?php
 use App\Livewire\Home;
-use App\Livewire\ItemDetails;
-use App\Livewire\Profile;
 use App\Livewire\Invoice;
-use App\Livewire\Auth\Auth;
-use App\Livewire\Auth\CustomerRegister;
+use App\Livewire\Profile;
+use App\Livewire\Auth\login;
+use App\Livewire\ItemDetails;
+use App\Http\Controllers\logout;
 use App\Livewire\Auth\CustomerLogin;
 use App\Livewire\Auth\CustomerLogout;
-use App\Http\Controllers\logout;
+use App\Livewire\Dashboard\Dashboard;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\Dashboard\RolesTable;
+use App\Livewire\Dashboard\StaffTable;
+use App\Livewire\Auth\CustomerRegister;
+use App\Livewire\Dashboard\StaffProfile;
+use App\Livewire\Dashboard\CustomerTable;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,12 +29,18 @@ use Illuminate\Support\Facades\Route;
 Route::get("/",Home::class)->name("home");
 Route::get("/invoice",Invoice::class)->name("invoice");
 Route::get("/profile",Profile::class)->name("profile")->middleware("customerAuth");
-Route::get("/Authentication",Auth::class)->name("Authentication");
+Route::get("/detaile/{id}",ItemDetails::class)->name("detaile");
+// Route::get("/Authentication",Auth::class)->name("Authentication");
+
 Route::get("/customerRegister",CustomerRegister::class)->name("customerRegister");
 Route::get("/customerLogin",CustomerLogin::class)->name("customerLogin");
-// Route::get("/customerLogout",CustomerLogout::class)->name("customerLogout");
-Route::get("/detaile/{id}",ItemDetails::class)->name("detaile");
+Route::get("/login",login::class)->name("login");
 Route::get("/customerLogout",[logout::class,"logoutCustomer"])->name("customerLogout");
-// Route::get('/', function () {
-//     return view('livewire.home');
-// });
+
+
+//Dashboard route
+Route::get("Dashboard",Dashboard::class)->name("dashboard")->middleware("auth");
+Route::get("rolesTable",RolesTable::class)->name("rolesTable");
+Route::get("staffTable",StaffTable::class)->name("staffTable");
+Route::get("staff-profile",StaffProfile::class)->name("staff.profile");
+Route::get("customer-table",CustomerTable::class)->name("customerTable");

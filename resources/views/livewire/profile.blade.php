@@ -60,22 +60,27 @@
                                                   </tr>
                                                 </thead>
                                                 <tbody>
-                                                  <tr>
-                                                    <th scope="row">111222</th>
-                                                    <td>ذاتي</td>
-                                                    <td>
-                                                        <a href="" class="btn btn-primary fw-bold">عرض</a>
-                                                        <a href="" class="btn btn-danger fw-bold">حذف</a>
-                                                    </td>
-                                                  </tr>
-                                                  <tr>
-                                                    <th scope="row">111222</th>
-                                                    <td>احمد دريد</td>
-                                                    <td>
-                                                        <a href="" class="btn btn-primary">عرض</a>
-                                                        <a href="" class="btn btn-danger">حذف</a>
-                                                    </td>
-                                                  </tr>
+                                                    @php
+                                                        $invoices = session("customer")->invoices();
+                                                        // $num = 1;
+                                                    @endphp
+
+                                                    @foreach($invoices as $invoice)
+                                                        <tr>
+                                                            <th scope="row">{{ $invoice->id }}</th>
+                                                            <td>
+                                                                @if($invoice->user_id)
+                                                                    {{ DB::table('users')->find($invoice->user_id)->name }}
+                                                                @else
+                                                                    ذاتي
+                                                                @endif
+                                                            </td>
+                                                            <td>
+                                                                <a href="" class="btn btn-primary fw-bold">عرض</a>
+                                                                <a href="" class="btn btn-danger fw-bold">حذف</a>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
                                                 </tbody>
                                               </table>
                                         </div>

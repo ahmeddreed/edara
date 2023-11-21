@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string("name");
             $table->foreignId("section_id")->references('id')->on('sections');
+            $table->foreignId("user_id")->references('id')->on('users');
             $table->timestamps();
         });
     }

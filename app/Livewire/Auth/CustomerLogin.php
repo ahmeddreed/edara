@@ -38,6 +38,6 @@ class CustomerLogin extends Component
             session()->flash("msg_e"," عذرا يوجد خطا");
         }
 
-        $this->reset("name","phone");
+        $this->reset();
     }
 }

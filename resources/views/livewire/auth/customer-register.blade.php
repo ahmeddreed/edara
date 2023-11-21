@@ -23,9 +23,9 @@
                 <div class="mb-3">
                     <select wire:model='governorate' class="form-select" aria-label="Default select example">
                         <option selected>المحافظات</option>
-                        <option value="1">بغداد</option>
-                        <option value="2">الربيل</option>
-                        <option value="3">البصرة</option>
+                        <option value="بغداد">بغداد</option>
+                        <option value="الربيل">الربيل</option>
+                        <option value="البصرة">البصرة</option>
                     </select>
                     <small class="text-danger">@error('governoratet') {{ $message }} @enderror</small>
                 </div>

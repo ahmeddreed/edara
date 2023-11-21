@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('invoices', function (Blueprint $table) {
+        Schema::create('pruchases', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("user_id")->references('id')->on('users');
-            $table->foreignId("customer_id")->references('id')->on('customers');
-            $table->integer("t_price")->default(0);
-            $table->string("type")->nullable();
-            $table->string("note",500)->nullable();
+            $table->foreignId("user_id")->references('id')->on('users')->nullable();
+            $table->string("companyName");
+            $table->integer("T_price")->default(0);
+            $table->string("note",1000)->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('invoices');
+        Schema::dropIfExists('pruchases');
     }
 };
