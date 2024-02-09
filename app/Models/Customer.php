@@ -24,4 +24,18 @@ class Customer extends Model
 
         return $this->hasMany(Invoice::class)->get();
     }
+
+    public function account(){
+
+        return $this->hasOne(CustomerAccount::class)->first();
+    }
+
+    public function updateCostOfAccount($totalCost){
+
+        $account = CustomerAccount::where("customer_id",$this->id)->first();
+        $account->total_cost = $totalCost;
+        $account->update();
+
+    }
+
 }

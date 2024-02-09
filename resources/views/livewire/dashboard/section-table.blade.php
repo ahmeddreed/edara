@@ -1,13 +1,13 @@
 <div class="container">
     <div class="row">
 
-        <div class="col-10 mx-auto text-light">
+        <div class="col-10 mx-auto color">
             @if(session()->has("msg_s"))
-                <div class="alert alert-success text-center text-light" role="alert">
+                <div class="alert alert-success text-center color" role="alert">
                     {{ session()->get("msg_s") }}
                 </div>
             @elseif(session()->has("msg_e"))
-                <div class="alert alert-danger text-center text-light" role="alert">
+                <div class="alert alert-danger text-center color" role="alert">
                     {{ session()->get("msg_e") }}
                 </div>
             @endif
@@ -15,7 +15,7 @@
         </div>
 
         <div class="col-10 mx-auto">
-            <h3 class="text-end text-light mb-5">جدول الصلاحيات</h3>
+            <h3 class="text-end text-light mb-5">جدول الاقسام</h3>
             @php
                 $add = "add";
                 $update = "update";
@@ -53,7 +53,7 @@
                                     @php
                                         $i=1;
                                     @endphp
-                                    @foreach($roles as $item)
+                                    @foreach($sections as $item)
                                     <tr>
                                         <th scope="row">
                                             {{$i++}}
@@ -73,31 +73,29 @@
                             </table>
                         </div>
                     </div>
-                    @if($roles->count() > 0)
-                        <div class="card-footer p-0">
-                            <tr>
-                                <p class="">
-                                    {{ $roles->links() }}
-                                </p>
-                            </tr>
-                            <div class="mt-3">
-                                <a href="{{ route("dashboard") }}" class="btn btn-primary fs-6 fw-bold">الرجوع</a>
-                            </div>
+                    <div class="card-footer p-0 d-flex justify-content-between">
+                        <div>
+                            <p class="">
+                                {{ $sections->links() }}
+                            </p>
                         </div>
-                    @endif
+                        <div class="mt-3">
+                            <a href="{{ route("dashboard") }}" class="btn btn-primary fs-6 fw-bold">الرجوع</a>
+                        </div>
+                    </div>
                 </div>
             </div>
 
         @elseif($show == "add")
             <div class="col-10 mx-auto mb-5">
                 <div class="card mx-auto">
-                    <h5 class="my-4 color text-center">انشاء صلاحيه جديد</h5>
+                    <h5 class="my-4 color text-center">انشاء القسم جديد</h5>
                     <div class="card-body">
                         <form class="row g-3 mb-5" wire:submit.prevent='create' action="" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="col-8 mx-auto">
-                                <label for="exampleFormControlInput1" class=" form-label color">اسم الصلاحيه :</label>
-                                <input type="text" name="name" wire:model='name' class="form-control g-3 in-valid" id="exampleFormControlInput1" placeholder="ادخل اسم الصلاحية " />
+                                <label for="exampleFormControlInput1" class=" form-label color">اسم القسم :</label>
+                                <input type="text" name="name" wire:model='name' class="form-control g-3 in-valid" id="exampleFormControlInput1" placeholder="ادخل اسم القسم " />
                                 <small class="text-danger">@error('name') {{ $message }} @enderror</small>
                             </div>
                             <button type="submit" class="btn btn-primary fs-5 col-8 mx-auto">انشاء</button>

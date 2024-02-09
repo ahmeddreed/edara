@@ -5,6 +5,7 @@ namespace App\Livewire\Dashboard;
 use App\Models\Role;
 use App\Models\User;
 use Livewire\Component;
+use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use Livewire\Attributes\Layout;
 use Illuminate\Support\Facades\Hash;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Storage;
 class StaffTable extends Component
 {
     use WithFileUploads;
+    use WithPagination;
 
     #[Layout("layouts.dashboard")]
 
@@ -37,6 +39,19 @@ class StaffTable extends Component
 
     public $search = "";
     public $show = "table";
+
+
+
+    public function  __construct() {
+
+        //Middleware in another way
+        if(auth()->user()->role_id !=1){
+
+            $this->redirect("/Dashboard");
+        }
+    }
+
+
 
     public function render(){
 
@@ -143,8 +158,8 @@ class StaffTable extends Component
                 //he is have a image
                 if($this->image != null){
                     // Delete the Old Picture
-                    if(Storage::exists("public/UseImager",$this->old_image)){
-                        Storage::delete("public/UseImager/".$this->old_image);
+                    if(Storage::exists("public/UserImager",$this->old_image)){
+                        Storage::delete("public/UserImager/".$this->old_image);
                     }
                     //settings of picture
                     $image_name = $this->fileSettings($this->image);
@@ -206,10 +221,10 @@ class StaffTable extends Component
             $staff = $this->staff;
 
             //he is have a image
-            if($this->image != null){
+            if($staff->image != null){
                 // Delete the Old Picture
-                if(Storage::exists("public/UseImager",$this->old_image)){
-                    Storage::delete("public/UseImager/".$this->old_image);
+                if(Storage::exists("public/UserImager",$this->old_image)){
+                    Storage::delete("public/UserImager/".$this->old_image);
                 }
             }
             //delete staff
@@ -238,7 +253,7 @@ class StaffTable extends Component
     public function fileSettings($file){////////file settings///////
         $ext = $file->extension();
         $image_name = time().".".$ext;
-        $file->storeAs("public/UseImager/", $image_name);
+        $file->storeAs("public/UserImager/", $image_name);
 
         return $image_name;
     }

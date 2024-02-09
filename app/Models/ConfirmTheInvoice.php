@@ -11,5 +11,7 @@ class ConfirmTheInvoice extends Model
 
     protected $fillable = [
         "invoice_id",
+        "invoice_Verify",
+        "equip",
     ];
 }

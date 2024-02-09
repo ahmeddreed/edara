@@ -15,7 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId("invoice_id")->references('id')->on('invoices');
             $table->foreignId("material_id")->references('id')->on('materials');
-            $table->integer("count")->default(0);
+            $table->integer("Qty")->default(0);
+            $table->integer("price")->default(0);
+            $table->integer("sale_price")->default(0);
+            $table->integer("cost_of_all")->default(0);
+            $table->boolean("equip")->default(0);
             $table->string("note",500)->nullable();
             $table->timestamps();
         });

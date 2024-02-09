@@ -17,4 +17,36 @@ class Material extends Model
         "category_id",
         "note",
     ];
+
+    public function user(){
+
+        return $this->belongsTo(User::class)->first()->name;
+    }
+
+
+    public function category(){
+
+        return $this->belongsTo(Category::class)->first()->name;
+    }
+
+    // public function number(){
+
+    //     return $this->hasOne(NumberOfMaterial::class)->first()->number;
+    // }
+
+
+    public function number(){
+
+        $num = 0;
+        $data = $this->hasOne(NumberOfMaterial::class)->first();
+
+        if($data != null)
+
+            $num = $data->number;
+        else
+
+            $num = 0;
+
+        return $num;
+    }
 }

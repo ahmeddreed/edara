@@ -30,6 +30,18 @@ class CustomerTable extends Component
     public $search = "";
     public $show = "table";
 
+
+    public function  __construct() {
+
+        //Middleware in another way
+        if(auth()->user()->role_id !=1){
+
+            $this->redirect("/Dashboard");
+        }
+    }
+
+
+
     public function render()
     {
 

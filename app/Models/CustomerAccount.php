@@ -10,6 +10,7 @@ class CustomerAccount extends Model
     use HasFactory;
     protected $fillable = [
       "customer_id",
-      "number",
+      "total_cost",
+      "note",
     ];
 }

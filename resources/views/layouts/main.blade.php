@@ -25,6 +25,11 @@
             color: #0097B2;
         }
 
+
+        body{
+            background-color: #efeff6;
+        }
+
     </style>
 
     @livewireStyles

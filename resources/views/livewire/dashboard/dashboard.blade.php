@@ -39,7 +39,7 @@
         <div class="col-lg-3 col-md-4 col-sm-5 my-3 ">
             <div class="card shadow rounded bg"  style="width:15rem;height:15rem;">
                 <div class="card-header mx-auto">
-                    <img src="{{ asset("img/dash/customer.png") }}" alt=""  style="width: 10rem;height: 10rem;" class="card-img-top text-center">
+                    <img src="{{ asset("img/dash/profile.webp") }}" alt=""  style="width: 10rem;height: 10rem;" class="card-img-top text-center">
                 </div>
                 <div class="card-body mx-auto">
                     <a href="{{ route("staff.profile") }}" class="btn btn-light color text-center rounded">الملف الشخصي</a>
@@ -60,30 +60,30 @@
         </div>
 
 
-        <div class="col-lg-3 col-md-4 col-sm-5 my-3 ">
-            <div class="card shadow rounded bg"  style="width:15rem;height:15rem;">
-                <div class="card-header mx-auto">
-                    <img src="{{ asset("img/dash/customer.png") }}" alt=""  style="width: 10rem;height: 10rem;" class="card-img-top text-center">
-                </div>
-                <div class="card-body mx-auto">
-                    <a href="" class="btn btn-light color text-center rounded">المشتريات </a>
-                </div>
-            </div>
-        </div>
-
 
 
         <div class="col-lg-3 col-md-4 col-sm-5 my-3 ">
             <div class="card shadow rounded bg"  style="width:15rem;height:15rem;">
                 <div class="card-header mx-auto">
-                    <img src="{{ asset("img/dash/customer.png") }}" alt=""  style="width: 10rem;height: 10rem;" class="card-img-top text-center">
+                    <img src="{{ asset("img/dash/sales.webp") }}" alt=""  style="width: 10rem;height: 10rem;" class="card-img-top text-center">
                 </div>
                 <div class="card-body mx-auto">
-                    <a href="" class="btn btn-light color text-center rounded">المبيعات </a>
+                    <a href="{{ route("salesTable") }}" class="btn btn-light color text-center rounded">العمليات </a>
                 </div>
             </div>
         </div>
 
+
+        <div class="col-lg-3 col-md-4 col-sm-5 my-3 ">
+            <div class="card shadow rounded bg"  style="width:15rem;height:15rem;">
+                <div class="card-header mx-auto">
+                    <img src="{{ asset("img/dash/imf.png") }}" alt=""  style="width: 10rem;height: 10rem;" class="card-img-top text-center">
+                </div>
+                <div class="card-body mx-auto">
+                    <a href="{{ route("imf") }}" class="btn btn-light color text-center rounded">الصندوق</a>
+                </div>
+            </div>
+        </div>
 
         <div class="col-lg-3 col-md-4 col-sm-5 my-3 ">
             <div class="card shadow rounded bg"  style="width:15rem;height:15rem;">
@@ -91,7 +91,7 @@
                     <img src="{{ asset("img/dash/material.png") }}" alt=""  style="width: 10rem;height: 10rem;" class="card-img-top text-center">
                 </div>
                 <div class="card-body mx-auto">
-                    <a href="" class="btn btn-light color text-center rounded">المواد</a>
+                    <a href="{{ route("materialTable") }}" class="btn btn-light color text-center rounded">المواد</a>
                 </div>
             </div>
         </div>
@@ -104,7 +104,7 @@
                     <img src="{{ asset("img/dash/section.png") }}" alt=""  style="width: 10rem;height: 10rem;" class="card-img-top text-center">
                 </div>
                 <div class="card-body mx-auto">
-                    <a href="" class="btn btn-light color text-center rounded">الاقسام</a>
+                    <a href="{{ route("sectionTable") }}" class="btn btn-light color text-center rounded">الاقسام</a>
                 </div>
             </div>
         </div>
@@ -116,7 +116,7 @@
                     <img src="{{ asset("img/dash/category.png") }}" alt=""  style="width: 10rem;height: 10rem;" class="card-img-top text-center">
                 </div>
                 <div class="card-body mx-auto">
-                    <a href="" class="btn btn-light color text-center rounded">الفئات</a>
+                    <a href="{{ route("categoryTable") }}" class="btn btn-light color text-center rounded">الفئات</a>
                 </div>
             </div>
         </div>
@@ -129,7 +129,7 @@
                     <img src="{{ asset("img/dash/order.png") }}" alt=""  style="width: 10rem;height: 10rem;" class="card-img-top text-center">
                 </div>
                 <div class="card-body mx-auto">
-                    <a href="" class="btn btn-light color text-center rounded">الطلبات</a>
+                    <a href="{{ route("invoiceProcessing") }}" class="btn btn-light color text-center rounded">الطلبات</a>
                 </div>
             </div>
         </div>
@@ -152,7 +152,7 @@
                     <img src="{{ asset("img/dash/home.png") }}" alt=""  style="width: 10rem;height: 10rem;" class="card-img-top text-center">
                 </div>
                 <div class="card-body mx-auto">
-                    <a href="" class="btn btn-light color text-center rounded">الرائسية</a>
+                    <a href="{{ route("home") }}" class="btn btn-light color text-center rounded">الرائسية</a>
                 </div>
             </div>
         </div>

@@ -1,13 +1,13 @@
 <div class="container">
     <div class="row">
 
-        <div class="col-10 mx-auto text-light">
+        <div class="col-10 mx-auto color">
             @if(session()->has("msg_s"))
-                <div class="alert alert-success text-center text-light" role="alert">
+                <div class="alert alert-success text-center color" role="alert">
                     {{ session()->get("msg_s") }}
                 </div>
             @elseif(session()->has("msg_e"))
-                <div class="alert alert-danger text-center text-light" role="alert">
+                <div class="alert alert-danger text-center color" role="alert">
                     {{ session()->get("msg_e") }}
                 </div>
             @endif
@@ -15,12 +15,7 @@
         </div>
 
         <div class="col-10 mx-auto">
-            <h3 class="text-end text-light mb-5">جدول الصلاحيات</h3>
-            @php
-                $add = "add";
-                $update = "update";
-                $delete = "delete";
-            @endphp
+            <h3 class="text-end text-light mb-5">جدول الفئات</h3>
         </div>
 
         @if($show == "table")
@@ -45,6 +40,7 @@
                                 <tr >
                                     <th scope="col">#</th>
                                     <th scope="col">الاسم</th>
+                                    <th scope="col">القسم</th>
                                     <th scope="col">تاريخ الاضافة</th>
                                     <th scope="col">العمليات</th>
                                 </tr>
@@ -53,12 +49,13 @@
                                     @php
                                         $i=1;
                                     @endphp
-                                    @foreach($roles as $item)
+                                    @foreach($categories as $item)
                                     <tr>
                                         <th scope="row">
                                             {{$i++}}
                                         </th>
                                         <td>{{ $item->name }}</td>
+                                        <td>{{ $item->section() }}</td>
                                         <td>{{ date($item->created_at) }}</td>
                                         <td class="px-3">
                                             @php
@@ -73,32 +70,39 @@
                             </table>
                         </div>
                     </div>
-                    @if($roles->count() > 0)
-                        <div class="card-footer p-0">
-                            <tr>
-                                <p class="">
-                                    {{ $roles->links() }}
-                                </p>
-                            </tr>
-                            <div class="mt-3">
-                                <a href="{{ route("dashboard") }}" class="btn btn-primary fs-6 fw-bold">الرجوع</a>
-                            </div>
+                    <div class="card-footer p-0 d-flex justify-content-between">
+                        <div>
+                            <p class="">
+                                {{ $categories->links() }}
+                            </p>
                         </div>
-                    @endif
+                        <div class="mt-3">
+                            <a href="{{ route("dashboard") }}" class="btn btn-primary fs-6 fw-bold">الرجوع</a>
+                        </div>
+                    </div>
                 </div>
             </div>
 
         @elseif($show == "add")
             <div class="col-10 mx-auto mb-5">
                 <div class="card mx-auto">
-                    <h5 class="my-4 color text-center">انشاء صلاحيه جديد</h5>
+                    <h5 class="my-4 color text-center">انشاء فئة جديد</h5>
                     <div class="card-body">
                         <form class="row g-3 mb-5" wire:submit.prevent='create' action="" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="col-8 mx-auto">
-                                <label for="exampleFormControlInput1" class=" form-label color">اسم الصلاحيه :</label>
-                                <input type="text" name="name" wire:model='name' class="form-control g-3 in-valid" id="exampleFormControlInput1" placeholder="ادخل اسم الصلاحية " />
+                                <label for="exampleFormControlInput1" class=" form-label color">اسم فئة :</label>
+                                <input type="text" name="name" wire:model='name' class="form-control g-3 in-valid" id="exampleFormControlInput1" placeholder="ادخل اسم فئة " />
                                 <small class="text-danger">@error('name') {{ $message }} @enderror</small>
+                            </div>
+                            <div class="col-8 mx-auto">
+                                <select wire:model='section_id' class="form-select" aria-label="Default select example">
+                                    <option value> الاقسام </option>
+                                    @foreach ($sections as $item)
+                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                                <small class="text-danger">@error('section_id') {{ $message }} @enderror</small>
                             </div>
                             <button type="submit" class="btn btn-primary fs-5 col-8 mx-auto">انشاء</button>
                             <button type="button" wire:click='cancel' class="btn btn-secondary fs-5 col-8 mx-auto">الغاء</button>
@@ -111,13 +115,25 @@
         @elseif($show == "update")
             <div class="col-10 mx-auto mb-5">
                 <div class="card mx-auto">
-                    <h5 class="my-4 color text-center">تعديل الصلاحية </h5>
+                    <h5 class="my-4 color text-center">تعديل الفئة </h5>
                     <div class="card-body">
                         <form class="row g-3 mb-5" action="" wire:submit.prevent='update' method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="col-8 mx-auto">
-                                <label class=" form-label color">اسم الصلاحيه :</label>
-                                <input wire:model='name' type="text" name="name" class="form-control g-3 @error('roleName') is-invalid  @enderror" id="exampleFormControlInput1" placeholder="ادخل اسم الصلاحية "/>
+                                <label class=" form-label color">اسم الفئة :</label>
+                                <input wire:model='name' type="text" name="name" class="form-control g-3 @error('name') is-invalid  @enderror" id="exampleFormControlInput1" placeholder="ادخل اسم الفئة "/>
+                                <small class="text-danger">@error('name') {{ $message }} @enderror</small>
+                            </div>
+                            <div class="col-8 mx-auto">
+                                <select wire:model='section_id' class="form-select" aria-label="Default select example">
+                                    <option value="{{ $section_id }}">{{ $category->section() }}</option>
+                                    @foreach ($sections as $item)
+                                        @if($item->id != $section_id)
+                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                                <small class="text-danger">@error('section_id') {{ $message }} @enderror</small>
                             </div>
                             <button type="submit" class="btn btn-primary fs-5 col-8 mx-auto">تعديل</button>
                             <button type="button" wire:click='cancel' class="btn btn-secondary fs-5 col-8 mx-auto">الغاء</button>

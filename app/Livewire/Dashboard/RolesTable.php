@@ -3,13 +3,17 @@
 namespace App\Livewire\Dashboard;
 
 use App\Models\Role;
+use GuzzleHttp\Middleware;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Illuminate\Support\Facades\Hash;
+use Livewire\WithPagination;
 
 class RolesTable extends Component
 {
+    use WithPagination;
     #[Layout("layouts.dashboard")]
+
 
 
     public $role_id;
@@ -20,6 +24,14 @@ class RolesTable extends Component
 
     public $show = "table";
 
+    public function  __construct() {
+
+        //Middleware in another way
+        if(auth()->user()->role_id !=1){
+
+            $this->redirect("/Dashboard");
+        }
+    }
 
     public function render()
     {

@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('i_m_f_s', function (Blueprint $table) {
             $table->id();
+            $table->foreignId("user_id")->references('id')->on('users');
+            $table->foreignId("customer_id")->references('id')->on('customers');
+            $table->integer("old_number");
+            $table->integer("new_number");
+            $table->integer("number");
+            $table->string("operation_type",10);
+            $table->string("note",500)->nullable();
             $table->timestamps();
         });
     }
