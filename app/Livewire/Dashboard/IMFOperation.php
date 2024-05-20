@@ -36,7 +36,7 @@ class IMFOperation extends Component
     public function  __construct() {
 
         //Middleware in another way
-        if(auth()->user()->role_id !=1){
+        if(auth()->user()->role_id ==3){
 
             $this->redirect("/Dashboard");
         }

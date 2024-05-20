@@ -15,7 +15,7 @@
         </div>
 
         <div class="col-10 mx-auto">
-            <h3 class="text-end text-light mb-5">جدول الاقسام</h3>
+            <h3 class="text-end text-light mb-5 fw-bold">جدول الاقسام</h3>
             @php
                 $add = "add";
                 $update = "update";
@@ -41,7 +41,7 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table color">
-                                <thead class="text-primary">
+                                <thead class="color  fs-5 fw-bold">
                                 <tr >
                                     <th scope="col">#</th>
                                     <th scope="col">الاسم</th>
@@ -49,7 +49,7 @@
                                     <th scope="col">العمليات</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class=" fs-6 fw-bold">
                                     @php
                                         $i=1;
                                     @endphp

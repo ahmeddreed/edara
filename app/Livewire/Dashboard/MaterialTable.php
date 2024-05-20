@@ -2,10 +2,11 @@
 
 namespace App\Livewire\Dashboard;
 
+use DateTime;
 use Livewire\Component;
 use App\Models\Category;
 use App\Models\Material;
-use DateTime;
+use App\Models\ItemDetails;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use Livewire\Attributes\Layout;
@@ -38,6 +39,11 @@ class MaterialTable extends Component
     public $category_id;
 
 
+    public $detail_id;
+    public $key;
+    public $value;
+
+
 
     public $search = "";
     public $show = "table";
@@ -46,7 +52,7 @@ class MaterialTable extends Component
     public function  __construct() {
 
         //Middleware in another way
-        if(auth()->user()->role_id !=1){
+        if(auth()->user()->role_id == 3){
 
             $this->redirect("/Dashboard");
         }
@@ -77,26 +83,25 @@ class MaterialTable extends Component
 
     public function showChange($name, $id = null,$enc =null){/////////show page section////////
 
-         if($name === "update" or $name === "delete" and $id != null and $enc != null){
+        // part of page
+        $section_name = ["add", "table", "update", "delete", "details"];
+         if(in_array($name,$section_name)){
 
             $this->material_id = $id;
             $this->material = Material::find($id);
-
-            if($name === "update"){
-                //set data
-                $this->title = $this->material->title;
-                $this->price = $this->material->price;
-                $this->discription = $this->material->discription;
-                $this->note = $this->material->salary;
-                $this->old_image = $this->material->image;
-                $this->category_id = $this->material->category_id;
-            }
+            //set data
+            $this->title = $this->material->title;
+            $this->price = $this->material->price;
+            $this->discription = $this->material->discription;
+            $this->note = $this->material->salary;
+            $this->old_image = $this->material->image;
+            $this->category_id = $this->material->category_id;
 
             $this->show = $name;
             $this->material_id_enc = $enc;
-         }elseif($name == "table" || $name == "add"){
 
-             $this->show = $name;
+
+
          }else{
 
             $this->show = "table";
@@ -242,6 +247,105 @@ class MaterialTable extends Component
         }
     }
 
+
+
+    public function addDetails(){//////add details//////
+
+        //validate data
+        $this->validate([
+            'key'=>'required',
+            'value'=>'required',
+            'material_id'=>'required|exists:materials,id',
+        ],[
+            "key.required" => "التفصيلة مطلوب",
+            "value.required" => "القيمة مطلوب",
+            "material_id.required" => " المادة مطلوب",
+            "material_id.exists" => "المادة غير موجودة",
+        ]);
+
+        // insert data
+        ItemDetails::insert([
+            'key'=> $this->key,
+            'value'=> $this->value,
+            'material_id'=> $this->material_id,
+            'user_id'=> auth()->id(),
+        ]);
+
+        // dd($this->key.":". $this->value);
+        // message
+        session()->flash("msg_s","تم الاضافة بنجاح ");
+
+        //reset the data
+        $this->reset("key","value");
+
+    }
+
+
+
+    public function detailDelete($id){
+
+        $this->detail_id = $id;
+        $item = ItemDetails::find($this->detail_id);
+        //check the item value
+        if($item){
+
+            //delete material
+            $item->delete();
+
+            //success message
+            session()->flash("msg_s","تم الحذف بنجاح");
+
+            //reset the data
+            $this->reset("detail_id");
+        }else{
+             //error message
+             session()->flash("msg_s","عذرا يوجد خطأ");
+        }
+    }
+
+
+    public function detailEdit($id){
+
+        $this->detail_id = $id;
+        //set data
+        $item = ItemDetails::find($this->detail_id);
+        $this->key = $item->key;
+        $this->value = $item->value;
+    }
+
+
+    public function updateDetails(){//////update details//////
+
+        //validate data
+        $this->validate([
+            'key'=>'required',
+            'value'=>'required',
+            'material_id'=>'required|exists:materials,id',
+        ],[
+            "key.required" => "التفصيلة مطلوب",
+            "value.required" => "القيمة مطلوب",
+            "material_id.required" => " المادة مطلوب",
+            "material_id.exists" => "المادة غير موجودة",
+        ]);
+
+        $item = ItemDetails::find($this->detail_id);
+
+        // insert data
+        $item->update([
+            'key'=> $this->key,
+            'value'=> $this->value,
+            'material_id'=> $this->material_id,
+            'user_id'=> auth()->id(),
+        ]);
+        $item->save();
+        // dd($this->key.":". $this->value);
+        // message
+        session()->flash("msg_s","تم التحديث بنجاح ");
+
+        //reset the data
+        $this->reset("key","value","detail_id");
+
+    }
 
 
     public function cancel(){////////reset the data///////

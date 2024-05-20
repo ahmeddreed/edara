@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Invoice;
 use App\Models\CustomerAccount;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -56,6 +57,32 @@ class User extends Authenticatable
     public function customer_account(){
 
         return $this->hasOne(CustomerAccount::class);
+    }
+
+
+    public function check_invoice($inv_id){//For Delegate
+
+        return DelegateAccount::where("user_id",$this->id)->where("invoice_id",$inv_id)->exists();
+    }
+
+    public function delegateAccount(){
+
+        $data = null;
+        $theCost = 0;
+        if($this->role_id == 4){
+            $data = DelegateAccount::where("user_id",$this->id)->get();
+            $cost = 0;
+            foreach ($data as $item) {
+                $invice = Invoice::find($item->invoice_id);
+                if($invice){
+                    $cost += $invice->totalCost();
+                }
+            }
+
+            $theCost = $cost * 0.01;
+        }
+
+        return $theCost;
     }
 
 }

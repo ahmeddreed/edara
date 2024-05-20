@@ -15,7 +15,7 @@
         </div>
 
         <div class="col-10 mx-auto">
-            <h3 class="text-end text-light mb-5">جدول العملاء</h3>
+            <h3 class="text-end text-light mb-5 fw-bold">جدول العملاء</h3>
         </div>
 
         @if($show == "table")
@@ -29,14 +29,14 @@
 
                         <div class="">
 
-                            <button wire:click='showChange("add")' class="btn btn-primary ms-2"><b>+</b></button>
+                            <button wire:click='showChange("add")' class="btn bg ms-2"><b>+</b></button>
                         </div>
 
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table color">
-                                <thead class="text-primary">
+                                <thead class="color fs-5 fw-bold">
                                 <tr >
                                     <th scope="col">#</th>
                                     <th scope="col">الاسم</th>
@@ -47,7 +47,7 @@
                                     <th scope="col">العمليات</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class=" fs-6 fw-bold">
                                     @php
                                         $i=1;
                                     @endphp
@@ -89,7 +89,7 @@
                                 </p>
                             </div>
                             <div class="mt-3">
-                                <a href="{{ route("dashboard") }}" class="btn btn-primary fs-6 fw-bold">الرجوع</a>
+                                <a href="{{ route("dashboard") }}" class="btn bg fs-6 fw-bold">الرجوع</a>
                             </div>
                         </div>
                 </div>
@@ -132,7 +132,7 @@
                                 <small class="text-danger">@error('address') {{ $message }} @enderror</small>
                             </div>
                             <div class="my-4">
-                                <button type="submit" class="btn btn-primary "> انشاء</button>
+                                <button type="submit" class="btn bg "> انشاء</button>
                                 <button type="button" wire:click='cancel' class="btn btn-secondary "> الغاء</button>
                             </div>
                         </form>

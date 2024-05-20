@@ -2,13 +2,15 @@
 
 namespace App\Livewire;
 
+use Exception;
+use App\Models\Section;
+use Livewire\Component;
 use App\Models\Category;
 use App\Models\Material;
-use App\Models\Section;
-use Exception;
-use Livewire\Component;
-use Livewire\Attributes\Layout;
+use App\Models\Settings;
 use Livewire\WithPagination;
+use Livewire\Attributes\Layout;
+use Illuminate\Support\Facades\DB;
 
 #[Layout("layouts.main")]
 
@@ -21,31 +23,41 @@ class Home extends Component
     public $section = null;
 
     public $section_id = null;
-    public $categories = null;
 
     public $category_id = null;
     public $search ="";
     public $numberOfPage = 15;
 
 
+    public function mount(?int $id = null){
+        $this->section_id = $id;
+    }
     public function render()
     {
+        $categories = null;
 
-        if(!$this->section_id)
+        if(!$this->section_id){
             $this->resetData();
-        else
-            $this->categories = Category::where("section_id",$this->section_id)->get();
+            $categories = Category::all();
+        }else{
+            $this->section = Section::all();
+            $categories = Category::where("section_id",$this->section_id)->get();
+        }
 
-        $materials = $this->showData();
-        return view('livewire.home',compact("materials"));
+        return view('livewire.home',compact("categories"));
     }
 
 
+    public function changeSection($name=null){
+        $this->search =$name;
+    }
 
+    public function changeRoute($id = null){
+        return $this->redirect('/home/'.$id, navigate: true);
+    }
 
     public function resetData(){
         $this->section = Section::all();
-        $this->categories = Category::all();
         $this->section_id = null;
         $this->category_id =null;
     }

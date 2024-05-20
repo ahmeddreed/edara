@@ -15,7 +15,7 @@
         </div>
 
         <div class="col-10 mx-auto">
-            <h3 class="text-end text-light mb-5">جدول الموظفين</h3>
+            <h3 class="text-end text-light mb-5 fw-bold">جدول الموظفين</h3>
         </div>
 
         @if($show == "table")
@@ -36,7 +36,7 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table color">
-                                <thead class="text-primary">
+                                <thead class="color  fs-5 fw-bold">
                                 <tr >
                                     <th scope="col">#</th>
                                     <th scope="col">الصورة</th>
@@ -48,7 +48,7 @@
                                     <th scope="col">العمليات</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class=" fs-6 fw-bold">
                                     @php
                                         $i=1;
                                     @endphp

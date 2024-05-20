@@ -22,6 +22,6 @@ class Dashboard extends Component
         Auth::logout();
         session()->flash("msg_s","تم تسجيل الخروج بنجاح");
 
-        $this->redirect("/");
+        $this->redirect("/home");
     }
 }

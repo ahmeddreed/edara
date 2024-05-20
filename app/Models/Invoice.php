@@ -16,6 +16,7 @@ class Invoice extends Model
         "customer_id",
         "t_price",
         "discount",
+        "equipper",
         "t_price_after_discount",
         "material_count",
         "note",

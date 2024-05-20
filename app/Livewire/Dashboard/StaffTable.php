@@ -34,7 +34,7 @@ class StaffTable extends Component
     public $old_image;
     public $gender;
     public $role_id;
-
+    public $manager;
 
 
     public $search = "";
@@ -45,7 +45,7 @@ class StaffTable extends Component
     public function  __construct() {
 
         //Middleware in another way
-        if(auth()->user()->role_id !=1){
+        if(auth()->user()->role_id == 3){
 
             $this->redirect("/Dashboard");
         }
@@ -64,10 +64,11 @@ class StaffTable extends Component
 
     public function showData(){///////// show defualt data ////////
 
-        $data = User::latest()->paginate(10);
+        $data = User::where("role_id","!=",1)->paginate(10);
+
         if($this->search){//searching
 
-           $data = User::where('name','like','%'.$this->search.'%')->paginate(10);
+            $data = User::where("role_id","!=",1)->where("manager",auth()->user()->manager)->where('name','like','%'.$this->search.'%')->paginate(10);
         }
 
         return $data;
@@ -107,8 +108,6 @@ class StaffTable extends Component
 
     public function create(){//////create staff//////
 
-        // dd($this->image);
-
         //validate data
         $this->staffValidate();
 
@@ -125,6 +124,8 @@ class StaffTable extends Component
             'salary'=> $this->salary,
             'picture'=> $image_name,
         ]);
+
+
 
         // message
         session()->flash("msg_s","تم انشاء الحساب بنجاح ");

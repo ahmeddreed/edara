@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('customers', function (Blueprint $table) {
+        Schema::create('delegate_accounts', function (Blueprint $table) {
             $table->id();
-            $table->string("name")->nullable();
-            $table->string("phone")->unique();
-            $table->string("governorate")->nullable();
-            $table->integer("manager")->nullable();
-            $table->string("address")->nullable();
+            $table->foreignId("user_id")->references('id')->on('users')->nullable();
+            $table->foreignId("invoice_id")->references('id')->on('invoices');
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists('delegate_accounts');
     }
 };

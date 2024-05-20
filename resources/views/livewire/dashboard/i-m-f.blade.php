@@ -1,5 +1,5 @@
 <div class="container color">
-    <div class="row">
+    <div class="row  fs-6 fw-bold">
 
         <div class="col-10 mx-auto text-light">
             @if(session()->has("msg_s"))
@@ -15,7 +15,7 @@
 
 
         <div class="col-12 mx-auto">
-            <h3 class="text-end text-light mb-4">الصندوق</h3>
+            <h3 class="text-end text-light mb-4 fw-bold">الصندوق</h3>
         </div>
 
         @if ($show == "add")
@@ -104,7 +104,7 @@
 
                                         <div class="col-lg-5 col-sm-10 mt-4  me-4">
                                             <button type="submit" class="btn btn-success fs-6 fw-bold">حفظ</button>
-                                            <button type="button" wire:click='showIMFTable' class="btn btn-primary fs-6 fw-bold">جدول العمليات</button>
+                                            <button type="button" wire:click='showIMFTable' class="btn bg fs-6 fw-bold">جدول العمليات</button>
                                             <a href="{{ route("dashboard") }}" class="btn btn-secondary fs-6 fw-bold">خروج</a>
                                         </div>
 
@@ -126,7 +126,7 @@
                         </form>
 
                         <div class="">
-                            <button wire:click='showAdd' class="btn btn-primary ms-2"><b>+</b></button>
+                            <button wire:click='showAdd' class="btn bg ms-2"><b>+</b></button>
                         </div>
 
                     </div>
@@ -135,7 +135,7 @@
                         @if(!empty($data))
                             <div class="table-responsive">
                                 <table class="table table-hover border ">
-                                    <thead class="table-primary">
+                                    <thead class="color fs-5 fw-bold">
                                         <tr >
                                             <th scope="row">#</th>
                                             <td>اسم العميل </td>
@@ -148,7 +148,7 @@
                                             <td>العمليات</td>
                                             </tr>
                                     </thead>
-                                    <tbody class="bg-light">
+                                    <tbody class="bg-light color">
                                         @php
                                             $num = 1;//counter to table
                                         @endphp

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Invoice;
 use App\Models\Material;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,6 +14,7 @@ class DataOfInvoice extends Model
     protected $fillable = [
         "invoice_id",
         "material_id",
+        "sale_price",
         "price",
         "Qty",
         "cost_of_all",
@@ -24,6 +26,17 @@ class DataOfInvoice extends Model
     public function material() {
 
         return $this->belongsTo(Material::class, 'material_id')->first();
-        // return  Material::find($this->material_id);
     }
+
+    public function invoice() {
+
+        return $this->belongsTo(Invoice::class, 'invoice_id')->first();
+    }
+
+    public function operation_type() {
+
+        return $this->belongsTo(Invoice::class, 'invoice_id')->first()->operation_type;
+    }
+
+
 }

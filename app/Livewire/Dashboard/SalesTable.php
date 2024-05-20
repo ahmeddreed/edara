@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Dashboard;
 
+use App\Models\User;
 use App\Models\Invoice;
 use Livewire\Component;
 use App\Models\Customer;
@@ -10,6 +11,7 @@ use Livewire\WithPagination;
 use App\Models\DataOfInvoice;
 use Livewire\WithFileUploads;
 use App\Models\CustomerAccount;
+use App\Models\DelegateAccount;
 use Livewire\Attributes\Layout;
 use App\Models\NumberOfMaterial;
 use App\Models\ConfirmTheInvoice;
@@ -35,6 +37,8 @@ class SalesTable extends Component
     public $invoice_note;
     public $invoice_material_count = 0;
     public $invoice_items;
+    public $invoice_equipper;
+    public $equippers;
     public $invoice_verify = true;
     public $user_id;
     public $discount = 0;
@@ -46,7 +50,7 @@ class SalesTable extends Component
     public $material_name;
     public $materials;
     public $material;
-    public $material_price;
+    public $material_price = 0;
     public $material_sale_price;
     public $material_Qty;
     public $material_total_cost;
@@ -66,13 +70,15 @@ class SalesTable extends Component
     public function  __construct() {
 
         //Middleware in another way
-        if(auth()->user()->role_id !=1){
+        if(auth()->user()->role_id == 3){
 
             $this->redirect("/Dashboard");
         }
     }
 
     public function render(){
+
+        $this->equippers = User::where("role_id",3)->get();
 
         if($this->date == null){//set date
 
@@ -116,6 +122,7 @@ class SalesTable extends Component
         $this->invoice_items = $invoice->items();
         $this->invoice_type = $invoice->invoice_type;
         $this->operation_type = $invoice->operation_type;
+        $this->invoice_equipper = $invoice->equipper;
 
         //customer data
         $this->customer_id = $invoice->customer_id;
@@ -191,7 +198,7 @@ class SalesTable extends Component
             'invoice_type' => 'required',
             'operation_type' => 'required',
             'material_Qty' => 'required|numeric|min:1',
-            'material_price' => 'nullable|numeric|min:1',
+            'material_price' => 'nullable|numeric',
             'material_sale_price' => 'required|numeric|min:1',
             'material_note' => 'nullable',
             'invoice_note' => 'nullable',
@@ -206,7 +213,8 @@ class SalesTable extends Component
 
                 return session()->flash("msg_e","الرجاء ادخال سعر المادة");
             }
-            $cost_of_all = $this->material_sale_price * $this->material_Qty;
+
+            $cost_of_all = $this->material_price * $this->material_Qty;
         }
 
         //change material count in store
@@ -245,7 +253,7 @@ class SalesTable extends Component
             'invoice_type' => 'required',
             'operation_type' => 'required',
             'material_Qty' => 'required|numeric|min:1',
-            'material_price' => 'nullable|numeric|min:1',
+            'material_price' => 'nullable|numeric',
             'material_sale_price' => 'required|numeric|min:1',
             'material_note' => 'nullable',
             'invoice_note' => 'nullable',
@@ -318,43 +326,52 @@ class SalesTable extends Component
 
         $this->validate([//validate data
             'customer_name' => 'required',
+            'invoice_equipper' => 'required',
             'invoice_type' => 'required',
             'operation_type' => 'required',
             'invoice_note' => 'nullable',
             'discount' => 'nullable',
         ]);
 
+
+
         //get total cost
         $totalCost = $this->totalPriceOfItem();
         //get material count
         $materialCount = $this->materialCount();
 
-        $totalCostAfterDiscount = $totalCost -$this->discount;
+        $totalCostAfterDiscount = $totalCost - $this->discount;
         $customer = Customer::find($this->customer_id);
 
         //update data of invoice
         $invoice = Invoice::findOrFail($this->invoice_id);
 
+
         if($this->operation_type != $invoice->operation_type and $invoice->operation_type != null){//if change the operation type
-            if($this->operation_type == "in"){//in operation
-                $this->onChangeInOperation();
-            }elseif($this->operation_type == "out"){//out operation
-                $this->onChangeOutOperation();
-            }else{
-                //another value
-            }
+            // if($this->operation_type == "in"){//in operation
+            //     $this->onChangeInOperation();
+            // }elseif($this->operation_type == "out"){//out operation
+            //     $this->onChangeOutOperation();
+            // }else{
+            //     //another value
+            // }
+
+            //يتم العمل عليه في ما بعد
+            return session()->flash("msg_e","عذرا لا يمكن تغيير نوع العملية بعد ");
+
+
         }elseif($this->invoice_type != $invoice->invoice_type and $invoice->invoice_type != null and $invoice->operation_type != null){ //if change the invoice type
             if($this->invoice_type == "cash"){//cash invoice
 
                 //low the value of account of this customer
-                $costValue = $customer->account()->total_cost - $this->invoice->t_price_after_discount;
+                $costValue = $customer->account()->total_cost + $this->invoice->t_price_after_discount;
 
                 //update the account value
                 $customer->updateCostOfAccount($costValue);
             }elseif($this->invoice_type == "debt"){//debt invoice
 
                 //low the value of account of this customer
-                $costValue = $customer->account()->total_cost + $this->invoice->t_price_after_discount;
+                $costValue = $customer->account()->total_cost - $this->invoice->t_price_after_discount;
 
                 //update the account value
                 $customer->updateCostOfAccount($costValue);
@@ -368,6 +385,7 @@ class SalesTable extends Component
 
         //change the customer => the case is update
         if($this->customer_id != $invoice->customer_id and $invoice->customer_id != null){
+
             if($this->invoice_type != $invoice->invoice_type and $invoice->invoice_type != null){
                 //change customer function
                 $this->onChangeCustomer();
@@ -386,6 +404,7 @@ class SalesTable extends Component
 
         }elseif($invoice->customer_id == null){//the case is create
 
+            $newCost = 0;
             //the customer not have an account
             if($customer->account() == null){
                 //create a new account for the customer
@@ -395,13 +414,26 @@ class SalesTable extends Component
                 //total cost is by defualt 0
             }
 
-            //update the cost value
-            $customer->updateCostOfAccount($totalCost);
+
+            //customer Account
+            $customerAccount = CustomerAccount::where("customer_id",$this->customer_id)->first();
+
+            if($this->invoice_type == "debt"){
+                if($this->operation_type == "in")
+                    $newCost = $customerAccount->total_cost - $totalCost;
+                elseif($this->operation_type == "out")
+                    $newCost = $customerAccount->total_cost + $totalCost;
+
+                //update the cost value
+                $customer->updateCostOfAccount($newCost);
+            }
+
+
         }
 
 
         //In case change anything
-        if($invoice->t_price_after_discount != $totalCostAfterDiscount || $invoice->material_count != $materialCount){
+        if($invoice->t_price_after_discount != $totalCostAfterDiscount || $invoice->material_count != $materialCount and $invoice->customer_id != null and $this->operation_type == "debt"){
             //new total cost of customer
             $newTotalCost = $customer->account()->total_cost + ($totalCostAfterDiscount - $invoice->t_price_after_discount);
 
@@ -413,7 +445,9 @@ class SalesTable extends Component
         }
 
 
+
         $invoice->customer_id = $this->customer_id;
+        $invoice->equipper = $this->invoice_equipper;
         $invoice->discount = $this->discount;
         $invoice->invoice_type = $this->invoice_type;
         $invoice->operation_type = $this->operation_type;
@@ -424,6 +458,30 @@ class SalesTable extends Component
 
         //save change
         $invoice->update();
+
+        //verify the invoice if it not verify
+        if(!$invoice->confirm()->invoice_verify){
+            $confirmTheInvoice = ConfirmTheInvoice::where("invoice_id",$invoice->id)->first();
+            $confirmTheInvoice->invoice_Verify = $this->invoice_verify;
+            $confirmTheInvoice->update();
+        }
+
+
+        //the delegate
+        if(auth()->user()->role_id == 4){
+
+            $user = User::find(auth()->id());
+            if(!$user->check_invoice($this->invoice_id)){//if not exsits
+                //add to delegate account table
+                DelegateAccount::create([
+                                    "user_id"=>$user->id,
+                                    "invoice_id"=>$this->invoice_id,
+                                    ]);
+            }
+        }
+
+
+
         $this->reset();
         $this->show = "table";
         session()->flash("msg_s","تم اضافة العنصر بنجاح");
@@ -777,15 +835,16 @@ class SalesTable extends Component
         $material = Material::find($id);
 
         if($material){
+            // dd($material->salePrice());
             $this->material  = $material;
             $this->material_name = $material->title;
             $this->material_id = $id;
             $this->side_bar_material_data = "material data";
 
             //count of cost
-            $this->material_price = $material->price;
+            // $this->material_price = $material->price;
             $this->material_Qty = 0;
-            $this->material_sale_price = $material->sale_price;
+            $this->material_sale_price = $material->salePrice();
             $this->material_total_cost = $this->material_Qty * $this->material_price;
         }
 
@@ -793,11 +852,22 @@ class SalesTable extends Component
 
 
     public function totalCost(){//count of cost
-        if($this->material_Qty != null and $this->material_price !=null){
-            $this->material_total_cost = $this->material_Qty * $this->material_price;
-        }else{
-            $this->material_total_cost = 0;
+        if($this->operation_type == "in"){
+
+            if($this->material_Qty != null and $this->material_price !=null){
+                $this->material_total_cost = $this->material_Qty * $this->material_price;
+            }else{
+                $this->material_total_cost = 0;
+            }
+        }elseif($this->operation_type == "out"){
+
+            if($this->material_Qty != null and $this->material_sale_price !=null){
+                $this->material_total_cost = $this->material_Qty * $this->material_sale_price;
+            }else{
+                $this->material_total_cost = 0;
+            }
         }
+
     }
 
 

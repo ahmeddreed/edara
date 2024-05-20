@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Dashboard;
 
+use App\Models\User;
 use Livewire\Component;
 use App\Models\Customer;
 use Livewire\Attributes\Layout;
@@ -34,7 +35,7 @@ class CustomerTable extends Component
     public function  __construct() {
 
         //Middleware in another way
-        if(auth()->user()->role_id !=1){
+        if(auth()->user()->role_id == 3){
 
             $this->redirect("/Dashboard");
         }
@@ -53,6 +54,8 @@ class CustomerTable extends Component
     public function showData(){///////// show defualt data ////////
 
         $data = Customer::latest()->paginate(10);
+
+        //$data = Customer::latest()->paginate(10);
         if($this->search){//searching
 
            $data = Customer::where('name','like','%'.$this->search.'%')->orWhere('address','like','%'.$this->search.'%')->paginate(10);
@@ -130,7 +133,7 @@ public function delete(){
 }
 
 
-   public function cancel(){////////reset the data///////
+public function cancel(){////////reset the data///////
 
     $this->reset();
 }

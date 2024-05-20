@@ -15,7 +15,7 @@
                 </div>
 
                 <div class="my-4">
-                    <button class="btn bg "> تسجيل</button>
+                    <button class="btn bg fs-5"> تسجيل</button>
                 </div>
             </form>
         </div>

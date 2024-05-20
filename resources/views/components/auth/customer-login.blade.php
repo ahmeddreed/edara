@@ -18,8 +18,8 @@
             </div>
 
             <div class="my-4 d-flex justify-content-between">
-                <button type="submit" class="btn bg ">تسجيل</button>
-                <a href="{{ route("home") }}" class="btn bg">الصفحة الرائسية</a>
+                <button type="submit" class="btn bg fs-5">تسجيل</button>
+                <a href="{{ route("home") }}" class="btn bg fs-5">الصفحة الرائسية</a>
             </div>
         </form>
     </div>

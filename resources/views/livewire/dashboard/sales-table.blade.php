@@ -15,7 +15,7 @@
 
 
         <div class="col-12 mx-auto">
-            <h3 class="text-end text-light mb-3">الفواتير</h3>
+            <h3 class="text-end text-light mb-3 fw-bold">الفواتير</h3>
         </div>
 
         @if($show == "table")
@@ -58,7 +58,7 @@
                                 <label class="form-check-label color fw-bold" for="flexSwitchCheckDefault">الكل</label>
                             </div>
                             <div class="">
-                                <button wire:click='createNewInvoice' class="btn btn-primary ms-2"><b>+</b></button>
+                                <button wire:click='createNewInvoice' class="btn bg ms-2"><b>+</b></button>
                             </div>
 
                         </div>
@@ -68,7 +68,7 @@
                         <div class="table-responsive">
                             <table class="table color">
                                 @if($data->count() > 0 )
-                                    <thead class="text-primary">
+                                    <thead class="color fw-bold fs-5">
                                     <tr >
                                         <th scope="col">رقم الفاتورة</th>
                                         <th scope="col"> صاحب الفاتورة</th>
@@ -79,7 +79,7 @@
                                         <th scope="col">العمليات</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody class="fs-6 fw-bold">
                                         @php
                                             $i=1;
                                         @endphp
@@ -122,7 +122,7 @@
                                 </p>
                             </div>
                             <div class="mt-3">
-                                <a href="{{ route("dashboard") }}" class="btn btn-primary fs-6 fw-bold">الرجوع</a>
+                                <a href="{{ route("dashboard") }}" class="btn bg fs-6 fw-bold">الرجوع</a>
                             </div>
                         </div>
                 </div>
@@ -133,8 +133,8 @@
                 {{-- <h3 class="text-end text-light mb-3 container">الفواتير</h3> --}}
                 @if($side_bar == "show")
                     <div class="card shadow">
-                        <div class="card-body">
 
+                        <div class="card-body fw-bold fs-6">
                             @if ($customers != null or $customer != null)
                                 @if ($side_bar_customer_data == "customer list")
                                     <div class="list">
@@ -178,7 +178,7 @@
                                     <span>الاسم</span> : <span>{{ $material->title }}</span>
                                     </p>
                                     <p class="color">
-                                    <span>السعر</span> : <span>{{ $material->price }}</span>
+                                    <span>السعر</span> : <span>{{ $material->salePrice() }}</span>
                                     </p>
                                     <p class="color">
                                     <span>العدد المتوفر</span> : <span>{{ $material->number() }}</span>
@@ -195,31 +195,35 @@
                 @endif
             </div>
 
-            <div class="col-lg-9 col-sm-10  mx-auto">
+            <div class="col-lg-9 col-sm-10  mx-auto  fs-5 fw-bold">
                 <div class="card sahdow">
                     <div class="card-body">
+
                         <form action="">
                             <div class="row">
                                 <div class="col-lg-3 col-sm-10 my-2">
-                                    <label for="" class="color form-lable mb-1">اسم العميل</label>
+                                    <label for="" class="color form-lable mb-1 fw-bold fs-6">اسم العميل</label>
                                     <input wire:keydown='setCustomerName' wire:model.live.debounce.100ms='customer_name' type="text" class="form-control" placeholder="اسم العميل" >
                                     <small class="text-danger">@error('customer_name') {{ $message }} @enderror</small>
                                 </div>
                                 <div class="col-lg-3 col-sm-10 my-2">
-                                    <label for="" class="color form-lable mb-1">اسم الموظف</label>
+                                    <label for="" class="color form-lable mb-1 fw-bold fs-6">اسم الموظف</label>
                                     <input type="text" class="form-control" value="{{ auth()->user()->name }}" placeholder="اسم الموظف" @disabled(true)>
                                 </div>
                                 <div class="col-lg-2 col-sm-10 my-2">
-                                    <label for="" class="color form-lable mb-1">  نوع العملية</label>
-                                    <select wire:model.live.debounce.100ms='operation_type' class="form-select" aria-label="Default select example">
-                                        <option>اختر</option>
-                                        <option value="in">شراء </option>
-                                        <option value="out">بيع</option>
-                                    </select>
-                                    <small class="text-danger">@error('operation_type') {{ $message }} @enderror</small>
+                                    <label for="" class="color form-lable mb-1 fw-bold fs-6">  نوع العملية</label>
+
+                                        <select @if ($operation_type !=null) @disabled(true) @endif  wire:model.live.debounce.100ms='operation_type' class="form-select" aria-label="Default select example">
+                                            <option>اختر</option>
+                                            <option value="in">شراء </option>
+                                            <option value="out">بيع</option>
+                                        </select>
+                                        <small class="text-danger">@error('operation_type') {{ $message }} @enderror</small>
+
+
                                 </div>
                                 <div class="col-lg-2 col-sm-10 my-2">
-                                    <label for="" class="color form-lable mb-1"> نوع الفاتورة </label>
+                                    <label for="" class="color form-lable mb-1 fw-bold fs-6"> نوع الفاتورة </label>
                                     <select wire:model.live.debounce.100ms='invoice_type' class="form-select" aria-label="Default select example">
                                         <option>اختر</option>
                                         <option value="cash">نقدي</option>
@@ -228,41 +232,43 @@
                                     <small class="text-danger">@error('invoice_type') {{ $message }} @enderror</small>
                                 </div>
                                 <div class="col-lg-2 col-sm-10 my-2">
-                                    <label for="" class="color form-lable mb-1"> التاريخ</label>
+                                    <label for="" class="color form-lable mb-1 fw-bold fs-6"> التاريخ</label>
                                     <input type="text" class="form-control" value="{{ now() }}" @disabled(true)>
                                 </div>
 
                                 <br>
 
                                 <div class="col-lg-3 col-sm-10 my-2">
-                                    <label for="" class="color form-lable mb-1">اسم المنتج</label>
+                                    <label for="" class="color form-lable mb-1 fw-bold fs-6">اسم المنتج</label>
                                     <input wire:keydown='setMaterialName' wire:model.live='material_name' type="text" class="form-control" placeholder="اسم المنتج ">
                                     <small class="text-danger">@error('material_name') {{ $message }} @enderror</small>
                                 </div>
                                 <div class="col-lg-2 col-sm-10 my-2">
-                                    <label for="" class="color form-lable mb-1">الكمية</label>
+                                    <label for="" class="color form-lable mb-1 fw-bold fs-6">الكمية</label>
                                     <input  wire:model='material_Qty' wire:keydown='totalCost' type="number" class="form-control" value="" placeholder="الكمية" >
                                     <small class="text-danger">@error('material_Qty') {{ $message }} @enderror</small>
                                 </div>
-                                <div class="col-lg-2 col-sm-10 my-2">
-                                    <label for="" class="color form-lable mb-1">السعر</label>
-                                    <input wire:model='material_price' wire:keydown='totalCost' type="number" class="form-control" value="" placeholder="السعر" >
-                                    <small class="text-danger">@error('material_price') {{ $message }} @enderror</small>
-                                </div>
+
                                 @if ($operation_type == "in")
                                     <div class="col-lg-2 col-sm-10 my-2">
-                                        <label for="" class="color form-lable mb-1">السعر البيع</label>
-                                        <input wire:model='material_sale_price' type="number" class="form-control" value="" placeholder="سعر البيع" >
-                                        <small class="text-danger">@error('material_sale_price') {{ $message }} @enderror</small>
+                                        <label for="" class="color form-lable mb-1 fw-bold fs-6">السعر</label>
+                                        <input wire:model='material_price' wire:keydown='totalCost' type="number" class="form-control" value="" placeholder="السعر" >
+                                        <small class="text-danger">@error('material_price') {{ $message }} @enderror</small>
                                     </div>
-                                @endif
+                                 @endif
+                                <div class="col-lg-2 col-sm-10 my-2">
+                                    <label for="" class="color form-lable mb-1 fw-bold fs-6">السعر البيع</label>
+                                    <input wire:model='material_sale_price' wire:keydown='totalCost' type="number" class="form-control" value="" placeholder="سعر البيع" >
+                                    <small class="text-danger">@error('material_sale_price') {{ $message }} @enderror</small>
+                                </div>
+
 
                                 <div class="col-lg-2 col-sm-10 my-2">
-                                    <label for="" class="color form-lable mb-1 "> مجموع الكلي</label>
+                                    <label for="" class="color form-lable mb-1 fw-bold fs-6 "> مجموع الكلي</label>
                                     <input wire:model='material_total_cost' type="number" class="form-control"  @disabled(true)>
                                 </div>
                                 <div class="col-lg-3 col-sm-10 my-2">
-                                    <label for="" class="color form-lable mb-1 ">الملاحظة</label>
+                                    <label for="" class="color form-lable mb-1 fw-bold fs-6 ">الملاحظة</label>
                                     <input type="text" class="form-control" value="الملاحظة">
                                 </div>
 
@@ -288,7 +294,7 @@
                                 <div class="col-12 bg-secondary shadow mx-auto rounded">
                                     <div class="table-responsive">
                                         <table class="table">
-                                            <thead class=" text-light">
+                                            <thead class=" text-light fw-bold fs-5">
                                                 <tr >
                                                     <th scope="col">#</th>
                                                     <th scope="col">اسم العنصر</th>
@@ -298,7 +304,7 @@
                                                     <th scope="col">العمليات</th>
                                                 </tr>
                                             </thead>
-                                            <tbody class=" text-light">
+                                            <tbody class=" text-light fw-bold fs-6">
                                                 @if($invoice->items())
                                                 @php
                                                     $num = 0;
@@ -325,30 +331,41 @@
 
                                 <br>
 
-                                <div class="col-lg-3 col-sm-10 my-2">
-                                    <label for="" class="color form-lable mb-1"> الخصم</label>
+                                <div class="col-lg-2 col-sm-10 my-2">
+                                    <label for="" class="color form-lable mb-1 fw-bold fs-6"> الخصم</label>
                                     <input type="text" class="form-control" wire:model='discount' placeholder="الخصم">
                                 </div>
 
                                 <div class="col-lg-2 col-sm-10 my-2">
-                                    <label for="" class="color form-lable mb-1 ">  عدد المنتجات</label>
+                                    <label for="" class="color form-lable mb-1 fw-bold fs-6 ">  عدد المنتجات</label>
                                     <input type="text" class="form-control" wire:model='invoice_material_count' @disabled(true)>
                                 </div>
 
                                 <div class="col-lg-2 col-sm-10 my-2">
-                                    <label for="" class="color form-lable mb-1 ">مجموع القائمة</label>
+                                    <label for="" class="color form-lable mb-1 fw-bold fs-6 ">مجموع القائمة</label>
                                     <input type="text" class="form-control" wire:model='invoice_total_cost' @disabled(true)>
                                 </div>
 
-                                <div class="col-lg-5 col-sm-10 my-2">
-                                    <label for="" class="color form-lable mb-1"> الملاحظة</label>
+                                <div class="col-lg-2 col-sm-10 my-2">
+                                    <label for="" class="color form-lable mb-1 fw-bold fs-6">المجهز</label>
+                                    <select wire:model.live.debounce.100ms='invoice_equipper' class="form-select" aria-label="Default select example">
+                                        <option>اختر</option>
+                                        @foreach ($equippers as $equiper)
+                                            <option value="{{ $equiper->id}}">{{ $equiper->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    <small class="text-danger">@error('operation_type') {{ $message }} @enderror</small>
+                                </div>
+
+                                <div class="col-lg-3 col-sm-10 my-2">
+                                    <label for="" class="color form-lable mb-1 fw-bold fs-6"> الملاحظة</label>
                                     <input type="text" class="form-control" placeholder="الملاحظة">
                                 </div>
 
                                 <br>
 
                                 <div class="col-lg-8 col-sm-10 my-3">
-                                    <button type="button" wire:click='saveTheInvoice' class="btn btn-primary fs-6 fw-bold">حفظ الفاتورة</button>
+                                    <button type="button" wire:click='saveTheInvoice' class="btn bg fs-6 fw-bold">حفظ الفاتورة</button>
                                     <button type="button" wire:click='out' class="btn btn-secondary fs-6 fw-bold">خروج</button>
                                 </div>
                             </div>

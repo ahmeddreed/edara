@@ -15,14 +15,20 @@
     <link rel="stylesheet" href="{{ asset("css/bootstrap.min.css") }}" />
     <!-- Custom styles -->
     <style>
+        @import url(https://fonts.googleapis.com/earlyaccess/scheherazade.css);
+        body {
+            background: #eee;
+            font-family: 'Scheherazade', serif;
+            font: 1.5em sans-serif;
+        }
         .bg{
-            background: #0097B2;
+            background: #8736EE;
             color: #f6f6f7;
         }
 
 
         .color{
-            color: #0097B2;
+            color: #8736EE;
         }
 
     </style>

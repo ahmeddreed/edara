@@ -15,7 +15,7 @@
         </div>
 
         <div class="col-10 mx-auto">
-            <h3 class="text-end text-light mb-5">جدول الصلاحيات</h3>
+            <h3 class="text-end text-light mb-5 fw-bold">جدول الصلاحيات</h3>
             @php
                 $add = "add";
                 $update = "update";
@@ -49,7 +49,7 @@
                                     <th scope="col">العمليات</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="fs-6 fw-bold">
                                     @php
                                         $i=1;
                                     @endphp
@@ -58,7 +58,7 @@
                                         <th scope="row">
                                             {{$i++}}
                                         </th>
-                                        <td>{{ $item->name }}</td>
+                                        <td >{{ $item->name }}</td>
                                         <td>{{ date($item->created_at) }}</td>
                                         <td class="px-3">
                                             @php

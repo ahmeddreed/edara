@@ -4,9 +4,9 @@ use App\Livewire\Invoice;
 use App\Livewire\Profile;
 use App\Livewire\Auth\login;
 use App\Livewire\ItemDetails;
-use App\Livewire\Dashboard\IMFOperation;
 use App\Http\Controllers\logout;
 use App\Livewire\Auth\CustomerLogin;
+use App\Livewire\Dashboard\Settings;
 use App\Livewire\Auth\CustomerLogout;
 use App\Livewire\Dashboard\Dashboard;
 use Illuminate\Support\Facades\Route;
@@ -14,6 +14,7 @@ use App\Livewire\Dashboard\RolesTable;
 use App\Livewire\Dashboard\SalesTable;
 use App\Livewire\Dashboard\StaffTable;
 use App\Livewire\Auth\CustomerRegister;
+use App\Livewire\Dashboard\IMFOperation;
 use App\Livewire\Dashboard\SectionTable;
 use App\Livewire\Dashboard\StaffProfile;
 use App\Livewire\Dashboard\CategoryTable;
@@ -32,13 +33,14 @@ use App\Livewire\Dashboard\InvoiceProcessing;
 |
 */
 
-Route::get("/",Home::class)->name("home");
+Route::get("home/{id?}",Home::class)->name("home");
+// Route::get("/{id}",Home::class)->name("home");
 Route::get("/invoice",Invoice::class)->name("invoice");
 Route::get("/customer-profile",Profile::class)->name("customer-profile")->middleware("customerAuth");
 Route::get("/detaile/{id}",ItemDetails::class)->name("detaile");
 // Route::get("/Authentication",Auth::class)->name("Authentication");
 
-Route::get("/customerRegister",CustomerRegister::class)->name("customerRegister")->middleware("guest");
+// Route::get("/customerRegister",CustomerRegister::class)->name("customerRegister")->middleware("guest");
 Route::get("/customerLogin",CustomerLogin::class)->name("customerLogin")->middleware("guest");
 Route::get("/login",login::class)->name("login")->middleware("guest");
 Route::get("/customerLogout",[logout::class,"logoutCustomer"])->name("customerLogout")->middleware("guest");
@@ -56,3 +58,4 @@ Route::get("material-table",MaterialTable::class)->name("materialTable")->middle
 Route::get("sales-table",SalesTable::class)->name("salesTable")->middleware("auth");
 Route::get("imf",IMFOperation::class)->name("imf")->middleware("auth");
 Route::get("invoice-processing",InvoiceProcessing::class)->name("invoiceProcessing")->middleware("auth");
+Route::get("settings",Settings::class)->name("settings")->middleware("auth");

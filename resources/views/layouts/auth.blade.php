@@ -15,20 +15,27 @@
     <link rel="stylesheet" href="{{ asset("css/bootstrap.min.css") }}" />
     <!-- Custom styles -->
     <style>
+        @import url(https://fonts.googleapis.com/earlyaccess/scheherazade.css);
+        body {
+        background: #eee;
+        font-family: 'Scheherazade', serif;
+        font: 1.5em sans-serif;
+        }
+
         .bg{
-            background: #0097B2;
+            background: #8736EE;
             color: #f6f6f7;
         }
 
 
         .color{
-            color: #0097B2;
+            color: #8736EE;
         }
 
     </style>
   </head>
 
-  <body class="bg container">
+  <body class="bg container fs-4">
     <!-- Start your project here-->
         <!-- navbar conbonent-->
 
@@ -40,9 +47,9 @@
         <div class="col-lg-10 mx-auto text-center my-5">
             <div class="card shadow color">
                 <div class="card-body d-flex justify-content-around">
-                    <a href="{{ route("login") }}" class="btn btn-light px-3 @if(request()->routeIs("login")) bg @else color  @endif fw-bold">تسجيل الدخول الموظفين</a>
-                    <a href="{{ route("customerLogin") }}" class="btn btn-light px-3  @if(request()->routeIs("customerLogin")) bg @else color  @endif fw-bold">تسجيل الدخول عميل</a>
-                    <a href="{{ route("customerRegister") }}" class="btn btn-light @if(request()->routeIs("customerRegister")) bg @else color  @endif px-3 fw-bold">انشاء حساب عميل</a>
+                    <a href="{{ route("login") }}" class="fs-5 btn btn-light px-3 @if(request()->routeIs("login")) bg @else color  @endif fw-bold">تسجيل الدخول الاعضاء</a>
+                    <a href="{{ route("customerLogin") }}" class="btn btn-light px-3 fs-5  @if(request()->routeIs("customerLogin")) bg @else color  @endif fw-bold">تسجيل الدخول عميل</a>
+                    {{-- <a href="{{ route("customerRegister") }}" class="btn btn-light @if(request()->routeIs("customerRegister")) bg @else color  @endif px-3 fw-bold">انشاء حساب عميل</a> --}}
                 </div>
             </div>
         </div>

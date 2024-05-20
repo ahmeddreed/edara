@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\ItemDetails;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Material extends Model
 {
@@ -29,6 +30,16 @@ class Material extends Model
         return $this->belongsTo(Category::class)->first()->name;
     }
 
+    public function details(){
+
+        return $this->hasMany(ItemDetails::class)->get();
+    }
+
+    public function categoryData(){
+
+        return $this->belongsTo(Category::class)->first();
+    }
+
     // public function number(){
 
     //     return $this->hasOne(NumberOfMaterial::class)->first()->number;
@@ -48,5 +59,30 @@ class Material extends Model
             $num = 0;
 
         return $num;
+    }
+
+
+    public function items() {
+
+        return $this->hasMany(DataOfInvoice::class)->get();
+    }
+
+
+    public function ItemDetails() {
+
+        return $this->hasMany(ItemDetails::class)->get();
+    }
+
+
+    public function salePrice() {
+
+        $itemPrice = 0;
+        foreach ($this->items() as $item) {
+
+            if($item->operation_type()=="in")
+                $itemPrice = $item->sale_price;
+        }
+
+        return $itemPrice;
     }
 }

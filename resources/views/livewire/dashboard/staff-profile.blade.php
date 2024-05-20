@@ -39,6 +39,10 @@
                                 <p class=""><span>الراتب</span>: <span>{{ auth()->user()->salary }}$</span></p>
                                 <p class=""><span>الجنس</span>: <span>{{ auth()->user()->gender }}</span></p>
                                 <p class=""><span>الوظيفة</span>: <span> {{ auth()->user()->role()->name }}</span></p>
+                                @if( auth()->user()->role_id == 4)
+                                    <p class=""><span> نسبة المبيعات</span>: <span class="text-success">{{ auth()->user()->delegateAccount() }}$ </span></p>
+                                @endif
+
                                 <p class=""><span>استلام الراتب</span>: <span class="text-success"> مستلم</span></p>
                             </div>
 

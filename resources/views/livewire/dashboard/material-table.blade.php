@@ -15,7 +15,7 @@
         </div>
 
         <div class="col-10 mx-auto">
-            <h3 class="text-end text-light mb-5">جدول المواد</h3>
+            <h3 class="text-end text-light mb-5 fw-bold">جدول المواد</h3>
         </div>
 
         @if($show == "table")
@@ -33,10 +33,10 @@
                         </div>
 
                     </div>
-                    <div class="card-body">
+                    <div class="card-body fs-6 fw-bold">
                         <div class="table-responsive">
                             <table class="table color">
-                                <thead class="text-primary">
+                                <thead class="color">
                                 <tr >
                                     <th scope="col">#</th>
                                     <th scope="col">الصورة</th>
@@ -76,6 +76,7 @@
                                                 @endphp
                                                 <button wire:click='showChange("update",{{ $item->id }},"{{ $id_enc }}")' class="btn btn-warning">تعديل</button>
                                                 <button wire:click='showChange("delete",{{ $item->id }},"{{ $id_enc }}" )' class="btn btn-danger">حذف</button>
+                                                <button wire:click='showChange("details",{{ $item->id }},"{{ $id_enc }}" )' class="btn btn-info">التفاصيل</button>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -247,6 +248,87 @@
                 </div>
             </div>
 
+            @elseif($show == "details")
+            <div class="col-10 mx-auto mb-5">
+                <div class="card mx-auto">
+                    <h5 class="my-4 color text-center"> تفاصيل المادة</h5>
+                    <div class="card-body">
+                        @if($material->details()->count() > 0)
+                            <div class="table-responsive">
+                                <table class="table color">
+                                    <thead class="text-primary">
+                                    <tr >
+                                        <th scope="col">#</th>
+                                        <th scope="col">المادة</th>
+                                        <th scope="col">التفصيلة</th>
+                                        <th scope="col">القيمة</th>
+                                        <th scope="col">الموظف</th>
+                                        <th scope="col">العمليات</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                            $i=1;
+                                        @endphp
+                                        @if($material->details())
+                                            @foreach($material->details() as $item)
+                                            <tr>
+                                                <th scope="row">
+                                                    {{$i++}}
+                                                </th>
+                                                <td>{{ $material->title}}</td>
+                                                <td>{{ $item->key }}</td>
+                                                <td>{{ $item->value }}</td>
+                                                <td>{{ $item->user()->name }}</td>
+                                                <td class="px-3">
+                                                    @php
+                                                        $id_enc = Hash::make($item->id);
+                                                    @endphp
+                                                    <button wire:click='detailEdit({{ $item->id }})' class="btn btn-sm btn-warning">تعديل</button>
+                                                    <button wire:click='detailDelete({{ $item->id }})' class="btn btn-sm  btn-danger">حذف</button>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+
+                                        @else
+
+                                        <h3 class="text-center color">
+                                            لا يوجد بيانات
+                                        </h3>
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
+                        @endif
+
+                        <hr class="color">
+                        <form class="row g-3 mb-5" wire:submit.prevent='addDetails'>
+                            @csrf
+                            <div class="col-4 mx-auto">
+                                <label for="exampleFormControlInput1" class=" form-label color">التفصيلة:</label>
+                                <input type="text" name="key" wire:model='key' class="form-control g-3 in-valid" id="exampleFormControlInput1" placeholder="ادخل تفصيلة المادة " />
+                                <small class="text-danger">@error('key') {{ $message }} @enderror</small>
+                            </div>
+
+                            <div class="col-4 mx-auto">
+                                <label for="exampleFormControlInput1" class=" form-label color"> القيمة :</label>
+                                <input type="text" name="value" wire:model='value' class="form-control g-3 in-valid" id="exampleFormControlInput1" placeholder="ادخل  القيمة " />
+                                <small class="text-danger">@error('value') {{ $message }} @enderror</small>
+                            </div>
+
+                            <div class="col-3 mx-auto mt-5">
+
+                                @if(!$detail_id)
+                                    <button type="submit" class="btn btn-sm btn-primary mx-auto">اضافة</button>
+                                @else
+                                    <button type="button" wire:click='updateDetails' class="btn btn-sm btn-warning mx-auto">تعديل</button>
+                                @endif
+                                <button type="button" wire:click='cancel' class="btn btn-sm btn-secondary mx-auto">الغاء</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
 
         @else
             <div class="col-10 mx-auto mb-5">

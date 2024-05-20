@@ -20,28 +20,54 @@ class InvoiceProcessing extends Component
     public $operations;
     public $equip_item;
     public $search;
+    public $date;
+    public $all_invoice = false;
     public $show = "table";
 
 
 
     public function  __construct() {
-
-        //Middleware in another way
-        if(auth()->user()->role_id !=1){
-
-            $this->redirect("/Dashboard");
-        }
+        //
     }
 
 
 
     public function render(){
 
-        if($this->search == null){ //not searching
-            $invoices = Invoice::latest()->paginate(20);
-        }else{//searching
-            $invoices = Invoice::where("id","like","%".$this->search."%")->paginate(10);
+        if($this->date == null){//set date
+
+            $this->date = now()->format("Y-m-d");
         }
+
+        if($this->search == null){ //not searching
+
+            if(auth()->user()->role_id != 3)//manager and assistant
+                $invoices = Invoice::where("created_at","like","%".$this->date."%")->paginate(10);
+            else//staff
+                $invoices = Invoice::where("equipper",auth()->id())->where("created_at","like","%".$this->date."%")->paginate(10);
+
+        }else{//searching
+
+            if(auth()->user()->role_id != 3)//manager and assistant
+                $invoices = Invoice::where("id","like","%".$this->search."%")->paginate(10);
+            else//staff
+                $invoices = Invoice::where("equipper",auth()->id())->where("id","like","%".$this->search."%")->paginate(10);
+        }
+
+        //if select all
+        if($this->all_invoice == true){
+            if(auth()->user()->role_id != 3)//manager and assistant
+                $invoices = Invoice::latest()->paginate(20);
+            else//staff
+                $invoices = Invoice::where("equipper",auth()->id())->paginate(20);
+
+        }
+
+        // if($this->search == null){ //not searching
+        //     $invoices = Invoice::latest()->paginate(20);
+        // }else{//searching
+        //     $invoices = Invoice::where("id","like","%".$this->search."%")->paginate(10);
+        // }
 
         return view('livewire.dashboard.invoice-processing',compact("invoices"));
     }
@@ -56,6 +82,11 @@ class InvoiceProcessing extends Component
 
 
     public function equip(){/////////equip the invoice////////
+
+        if(auth()->user()->role_id != 3){
+            //erorr message
+            return session()->flash("msg_e","ليس من صلاحياتك التجهيز");
+        }
 
         $equipped = ConfirmTheInvoice::where("invoice_id",$this->invoice_id)->first();
         $invoice = Invoice::findOrFail($this->invoice_id);
@@ -85,13 +116,24 @@ class InvoiceProcessing extends Component
     }
 
     public function equipItem($item_id){/////////equip the invoice////////
+        if(auth()->user()->role_id != 3){
+            //erorr message
+            return session()->flash("msg_e","ليس من صلاحياتك التجهيز");
+        }
 
-        //get the invoice
-        $dataOfInvoice = DataOfInvoice::findOrFail($item_id);
-        //set the data
-        $dataOfInvoice->equip =!$dataOfInvoice->equip;
-        //update data
-        $dataOfInvoice->update();
+        $equipped = ConfirmTheInvoice::where("invoice_id",$this->invoice_id)->first();
+        if($equipped->equip == false){
+            //get the invoice
+            $dataOfInvoice = DataOfInvoice::findOrFail($item_id);
+            //set the data
+            $dataOfInvoice->equip =!$dataOfInvoice->equip;
+            //update data
+            $dataOfInvoice->update();
+        }else{
+            //erorr message
+            return session()->flash("msg_e","تم التجهيز القائمة من قبل");
+        }
+
     }
 
 

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('salary');
             $table->string('gender',25);
             $table->foreignId("role_id")->references('id')->on('roles');
+            $table->integer('manager')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
