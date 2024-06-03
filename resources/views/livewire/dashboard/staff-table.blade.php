@@ -28,7 +28,7 @@
                         </form>
 
                         <div class="">
-
+                            <button  class="btn btn-success ms-2"><b>الرواتب</b></button>
                             <button wire:click='showChange("add")' class="btn btn-primary ms-2"><b>+</b></button>
                         </div>
 
@@ -71,7 +71,20 @@
                                             <td class="px-3">
                                                 @php
                                                     $id_enc = Hash::make($item->id);
+                                                    $date = date("m");
+
+                                                    // $date = strtotime($date);
+                                                    // $date = date("Y-m-d", strtotime("+1 month", $date));
+                                                    // dd($date);
+
+                                                    $salaryDate =  auth()->user()->lastSalary();
                                                 @endphp
+                                                @if($salaryDate == null or $salaryDate->created_at->format("m") !=  $date)
+                                                    <button wire:click='showChange("salary",{{ $item->id }},"{{ $id_enc }}")' class="btn btn-success">الراتب</button>
+                                                @else
+                                                    <button wire:click='showChange("salary",{{ $item->id }},"{{ $id_enc }}")' class="btn btn-warning">الراتب</button>
+                                                @endif
+
                                                 <button wire:click='showChange("update",{{ $item->id }},"{{ $id_enc }}")' class="btn btn-warning">تعديل</button>
                                                 <button wire:click='showChange("delete",{{ $item->id }},"{{ $id_enc }}" )' class="btn btn-danger">حذف</button>
                                             </td>
@@ -244,6 +257,27 @@
                         <div class="my-5 mx-auto text-danger text-center">
                             <form action="" wire:submit.prevent='delete' method="post">
                                 <button type="submit" class="btn btn-danger">حذف</button>
+                                <button type="button" wire:click='cancel' class="btn btn-secondary fs-5 mx-auto">الغاء</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            @elseif($show == "salary")
+            <div class="col-10 mx-auto mb-5">
+                <div class="card mx-auto">
+                    <h5 class="my-4 text-success text-center">اعطاء الراتب </h5>
+                    <div class="card-body">
+                        <h3 class="text-success text-center">
+                            <p>
+                                هل انت متاكد  من اعطاء الراتب لعذا الشخص
+                            </p>
+                        </h3>
+                        <div class="my-5 mx-auto text-success text-center">
+                            <form action="" wire:submit.prevent='delete' method="post">
+                                <button type="submit" class="btn btn-success">اعطاء</button>
                                 <button type="button" wire:click='cancel' class="btn btn-secondary fs-5 mx-auto">الغاء</button>
                             </form>
                         </div>

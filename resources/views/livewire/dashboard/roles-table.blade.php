@@ -59,7 +59,10 @@
                                             {{$i++}}
                                         </th>
                                         <td >{{ $item->name }}</td>
-                                        <td>{{ date($item->created_at) }}</td>
+                                        <td>@if($item->created_at)
+                                            {{ $item->created_at->format("Y-m-d")}}
+                                            @endif
+                                        </td>
                                         <td class="px-3">
                                             @php
                                                 $id_enc = Hash::make($item->id);

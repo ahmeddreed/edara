@@ -5,12 +5,14 @@ namespace App\Livewire\Dashboard;
 use App\Models\Section;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\WithFileUploads;
 use Livewire\Attributes\Layout;
 use Illuminate\Support\Facades\Hash;
 
 class SectionTable extends Component
 {
 
+    use WithFileUploads;
     use WithPagination;
     #[Layout("layouts.dashboard")]
 
@@ -19,6 +21,7 @@ class SectionTable extends Component
     public $section_id_enc = "";
     public $section;
     public $name;
+    public $img;
     public $search = "";
 
     public $show = "table";
@@ -79,21 +82,29 @@ class SectionTable extends Component
 
 
 
-     public function create(){//////create section //////
+    public function create(){//////create section //////
 
          //validate of data
          $this->validate([
             'name'=>'required|string|unique:sections',
+            'img'=>'required|image',
          ],[
             "name.required"=>"الاسم مطلوب",
             "name.string"=>"يجب ان يكون الاسم نص",
             "name.unique"=>"الاسم محجوز",
+            "img.required"=>"الصورة مطلوبة",
+            "img.image"=>"يجب ان تكون صورة",
          ]);
 
+
+        //Image settings
+        $image_name = $this->fileSettings($this->img);
 
          //insert data
          $section = Section::create([
             'name'=>$this->name,
+            'img'=>$image_name,
+
          ]);
 
          //success message
@@ -106,7 +117,7 @@ class SectionTable extends Component
 
 
 
-     public function update(){//////update section //////
+    public function update(){//////update section //////
 
          //validate of data
          $this->validate([
@@ -125,13 +136,19 @@ class SectionTable extends Component
 
             return session()->flash('error','هذا الاسم محجوز');
         }else{
-            //insert data
-            $section->update([
-                'name'=>$this->name,
-            ]);
+
+
+            //update data
+            $section->name = $this->name;
+            if($this->img){
+                //Image settings
+                $image_name = $this->fileSettings($this->img);
+                $section->img = $image_name;
+            }
+
 
             //save the change
-            $this->section->save();
+            $this->section->update();
 
             //success message
             session()->flash("msg_s","تم التحديث بنجاح");
@@ -146,7 +163,7 @@ class SectionTable extends Component
 
 
 
-     public function delete(){
+    public function delete(){
 
          //check the encrypt value
          if(Hash::check($this->section_id,$this->section_id_enc)){
@@ -171,9 +188,18 @@ class SectionTable extends Component
 
 
 
-     public function cancel(){///////reset data//////
+    public function cancel(){///////reset data//////
 
          $this->reset();
      }
+
+
+    public function fileSettings($file){////////file settings///////
+        $ext = $file->extension();
+        $image_name = time().".".$ext;
+        $file->move("SectionImager/", $image_name);
+
+        return $image_name;
+    }
 
 }

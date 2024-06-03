@@ -42,7 +42,7 @@ Route::get("/detaile/{id}",ItemDetails::class)->name("detaile");
 
 // Route::get("/customerRegister",CustomerRegister::class)->name("customerRegister")->middleware("guest");
 Route::get("/customerLogin",CustomerLogin::class)->name("customerLogin")->middleware("guest");
-Route::get("/login",login::class)->name("login")->middleware("guest");
+Route::get("/",login::class)->name("login")->middleware("guest");
 Route::get("/customerLogout",[logout::class,"logoutCustomer"])->name("customerLogout")->middleware("guest");
 
 

@@ -95,9 +95,9 @@ class StaffTable extends Component
 
             $this->show = $name;
             $this->staff_id_enc = $enc;
-         }elseif($name == "table" || $name == "add"){
+         }elseif($name == "table" || $name == "add" ||  $name == "salary"){
 
-             $this->show = $name;
+            $this->show = $name;
          }else{
 
             $this->show = "table";

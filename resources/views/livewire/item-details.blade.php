@@ -24,16 +24,25 @@
                         <div class="col-lg-5">السعر :</div>
                         <div class="col-lg-5"> {{ $material->price }}</div>
 
-                        <div class="col-lg-12 mt-3">
-                             <p class="color fs-5 fw-bold">
-                                الوصف:
-                            </p>
-                            <hr class="bg fw-bold fs-5">
-                            <p>
-                                {!!  $material->description !!}
-                            </p>
+                        @if($material->ItemDetails()->count() > 0)
+                            @foreach($material->ItemDetails() as $item)
+                                <div class="col-lg-5">{{ $item->key }} :</div>
+                                <div class="col-lg-5"> {{ $item->value  }}</div>
+                            @endforeach
+                        @endif
 
-                        </div>
+                        @if( $material->description)
+                            <div class="col-lg-12 mt-3">
+                                <p class="color fs-5 fw-bold">
+                                    الوصف:
+                                </p>
+                               <hr class="bg fw-bold fs-5">
+                                <p>
+                                    {!!  $material->description !!}
+                                </p>
+
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

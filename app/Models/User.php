@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Salary;
 use App\Models\Invoice;
 use App\Models\CustomerAccount;
 use Laravel\Sanctum\HasApiTokens;
@@ -83,6 +84,25 @@ class User extends Authenticatable
         }
 
         return $theCost;
+    }
+
+
+    public function salary(){
+
+        return $this->hasMany(Salary::class);
+    }
+
+
+    public function lastSalary(){
+
+        $myLastSalary = null;
+
+        foreach ($this->salary() as $item) {
+
+            $myLastSalary =  $item;
+        }
+
+        return $myLastSalary;
     }
 
 }

@@ -57,6 +57,9 @@ class StaffProfile extends Component
         }elseif($name === "password"){
             $this->show = $name;
         }
+        elseif($name === "salary"){
+            $this->show = $name;
+        }
         else{
 
            $this->show = "profile";

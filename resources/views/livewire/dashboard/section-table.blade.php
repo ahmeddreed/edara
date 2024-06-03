@@ -98,6 +98,11 @@
                                 <input type="text" name="name" wire:model='name' class="form-control g-3 in-valid" id="exampleFormControlInput1" placeholder="ادخل اسم القسم " />
                                 <small class="text-danger">@error('name') {{ $message }} @enderror</small>
                             </div>
+                            <div class="col-8 mx-auto">
+                                <label for="exampleFormControlInput1" class=" form-label color">صورة القسم :</label>
+                                <input type="file" name="img" wire:model='img' class="form-control g-3 in-valid" id="exampleFormControlInput1" placeholder=" " />
+                                <small class="text-danger">@error('img') {{ $message }} @enderror</small>
+                            </div>
                             <button type="submit" class="btn btn-primary fs-5 col-8 mx-auto">انشاء</button>
                             <button type="button" wire:click='cancel' class="btn btn-secondary fs-5 col-8 mx-auto">الغاء</button>
                         </form>
@@ -109,13 +114,18 @@
         @elseif($show == "update")
             <div class="col-10 mx-auto mb-5">
                 <div class="card mx-auto">
-                    <h5 class="my-4 color text-center">تعديل الصلاحية </h5>
+                    <h5 class="my-4 color text-center">تعديل القسم </h5>
                     <div class="card-body">
                         <form class="row g-3 mb-5" action="" wire:submit.prevent='update' method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="col-8 mx-auto">
-                                <label class=" form-label color">اسم الصلاحيه :</label>
+                                <label class=" form-label color">اسم القسم :</label>
                                 <input wire:model='name' type="text" name="name" class="form-control g-3 @error('roleName') is-invalid  @enderror" id="exampleFormControlInput1" placeholder="ادخل اسم الصلاحية "/>
+                            </div>
+                            <div class="col-8 mx-auto">
+                                <label for="exampleFormControlInput1" class=" form-label color">صورة القسم :</label>
+                                <input type="file" name="img" wire:model='img' class="form-control g-3 in-valid" id="exampleFormControlInput1" placeholder=" " />
+                                <small class="text-danger">@error('img') {{ $message }} @enderror</small>
                             </div>
                             <button type="submit" class="btn btn-primary fs-5 col-8 mx-auto">تعديل</button>
                             <button type="button" wire:click='cancel' class="btn btn-secondary fs-5 col-8 mx-auto">الغاء</button>

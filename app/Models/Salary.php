@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Section extends Model
+class Salary extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'img',
-        'user_id',
+        "user_id",
+        "salary",
     ];
+
 }

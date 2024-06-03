@@ -29,6 +29,7 @@
                                 <div class="my-5">
                                     <a wire:click='showChange("update")' class="btn btn-primary fs-5 d-block my-3">تعديل البيانات </a>
                                     <a wire:click='showChange("password")' class="btn btn-info fs-5 d-block my-3 text-light">تغيير الرمز</a>
+                                    <a wire:click='showChange("salary")' class="btn btn-info fs-5 d-block my-3 text-light">الرواتب المستلمة</a>
                                     <a href="{{ route("dashboard") }}" class="btn btn-info fs-5 d-block text-light">الرجوع</a>
                                 </div>
                             </div>
@@ -43,7 +44,17 @@
                                     <p class=""><span> نسبة المبيعات</span>: <span class="text-success">{{ auth()->user()->delegateAccount() }}$ </span></p>
                                 @endif
 
-                                <p class=""><span>استلام الراتب</span>: <span class="text-success"> مستلم</span></p>
+                                @php
+                                    $date = date("m");
+
+                                    // $date = strtotime($date);
+                                    // $date = date("Y-m-d", strtotime("+1 month", $date));
+                                    // dd($date);
+
+                                    $salaryDate =  auth()->user()->lastSalary();
+
+                                @endphp
+                                <p class=""><span>استلام الراتب</span>: <span class="@if($salaryDate == null or $salaryDate->created_at->format("m") !=  $date) text-warning @else text-success @endif "> @if($salaryDate == null or $salaryDate->created_at->format("m") !=  $date) غير مستلم @else مستلم @endif</span></p>
                             </div>
 
                         </div>
@@ -95,7 +106,53 @@
             </div>
 
 
+        @elseif($show == "salary")
+            <div class="col-10 mx-auto mb-5">
+                <div class="card mx-auto">
+                    <h5 class="my-4 color fw-bold text-center">الرواتب المستلمة </h5>
 
+                    <hr/>
+
+                    <div class="card-body">
+                        <div class="table-responsive mx-auto">
+                            @if(auth()->user()->salary()->count() > 0)
+                                <table class="table color">
+                                    <thead class="color  fs-5 fw-bold">
+                                        <tr >
+                                            <th scope="col">#</th>
+                                            <th scope="col">الاسم</th>
+                                            <th scope="col">الراتب </th>
+                                            <th scope="col">تاريخ الاضافة</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody class=" fs-6 fw-bold">
+                                        @php
+                                            $i=1;
+                                        @endphp
+
+                                        @foreach(auth()->user()->salary() as $item)
+                                            <tr>
+                                                <th scope="row">
+                                                    {{$i++}}
+                                                </th>
+                                                {{-- <td>{{ $item->name}}</td>
+                                                <td>{{ $item->salary }}</td>
+                                                <td>{{ date($item->created_at) }}</td> --}}
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            @else
+                                <h3 class="text-center mb-5 color">
+                                    لا يوجد بيانات
+                                </h3>
+                            @endif
+                        </div>
+                        <button type="button" wire:click='cancel' class="btn btn-secondary fs-5 fs-sm-6 col-8 mx-auto w-100">الغاء</button>
+                    </div>
+                </div>
+            </div>
         @elseif($show == "password")
             <div class="col-8 mx-auto mb-5">
                 <div class="card mx-auto">

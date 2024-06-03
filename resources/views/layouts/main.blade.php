@@ -54,7 +54,7 @@
 
 
         body{
-            background-color: #efeff6;
+            background-color: #e9e9ff;
         }
 
     </style>
@@ -137,19 +137,19 @@
           },
           breakpoints: {
             500: {
-              slidesPerView: 5.5,
+              slidesPerView:3,
               spaceBetween: 10,
             },
             580: {
-              slidesPerView: 6.5,
+              slidesPerView: 4,
               spaceBetween: 10,
             },
             768: {
-              slidesPerView: 7.5,
+              slidesPerView: 5,
               spaceBetween: 10,
             },
             1024: {
-              slidesPerView: 8.5,
+              slidesPerView: 7,
               spaceBetween: 10,
             },
           },
