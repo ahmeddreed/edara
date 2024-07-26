@@ -1,13 +1,13 @@
 <div class="container">
     <div class="row">
 
-        <div class="col-10 mx-auto color">
+        <div class="col-10 mx-auto text-light">
             @if(session()->has("msg_s"))
-                <div class="alert alert-success text-center color" role="alert">
+                <div class="alert alert-success text-center text-light" role="alert">
                     {{ session()->get("msg_s") }}
                 </div>
             @elseif(session()->has("msg_e"))
-                <div class="alert alert-danger text-center color" role="alert">
+                <div class="alert alert-danger text-center text-light" role="alert">
                     {{ session()->get("msg_e") }}
                 </div>
             @endif
@@ -15,7 +15,7 @@
         </div>
 
         <div class="col-10 mx-auto">
-            <h3 class="text-end text-light mb-5 fw-bold">جدول الاقسام</h3>
+            <h3 class="text-end text-light mb-5 fw-bold">جدول المخازن</h3>
             @php
                 $add = "add";
                 $update = "update";
@@ -41,30 +41,28 @@
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table color">
-                                <thead class="color  fs-5 fw-bold">
+                                <thead class="text-primary">
                                 <tr >
                                     <th scope="col">#</th>
-                                    <th scope="col">الصورة</th>
                                     <th scope="col">الاسم</th>
                                     <th scope="col">تاريخ الاضافة</th>
                                     <th scope="col">العمليات</th>
                                 </tr>
                                 </thead>
-                                <tbody class=" fs-6 fw-bold">
+                                <tbody class="fs-6 fw-bold">
                                     @php
                                         $i=1;
                                     @endphp
-                                    @foreach($sections as $item)
+                                    @foreach($stores as $item)
                                     <tr>
                                         <th scope="row">
                                             {{$i++}}
                                         </th>
-                                        <td>
-                                            <img style="width: 4rem;height: 4rem;" class="rounded" src="{{ asset("storage/SectionImage/".$item->img) }}" alt="">
-
+                                        <td >{{ $item->name }}</td>
+                                        <td>@if($item->created_at)
+                                            {{ $item->created_at->format("Y-m-d")}}
+                                            @endif
                                         </td>
-                                        <td>{{ $item->name }}</td>
-                                        <td>{{ date($item->created_at) }}</td>
                                         <td class="px-3">
                                             @php
                                                 $id_enc = Hash::make($item->id);
@@ -78,35 +76,32 @@
                             </table>
                         </div>
                     </div>
-                    <div class="card-footer p-0 d-flex justify-content-between">
-                        <div>
-                            <p class="">
-                                {{ $sections->links() }}
-                            </p>
+                    @if($stores->count() > 0)
+                        <div class="card-footer p-0">
+                            <tr>
+                                <p class="">
+                                    {{ $stores->links() }}
+                                </p>
+                            </tr>
+                            <div class="mt-3">
+                                <a href="{{ route("dashboard") }}" class="btn btn-primary fs-6 fw-bold">الرجوع</a>
+                            </div>
                         </div>
-                        <div class="mt-3">
-                            <a href="{{ route("dashboard") }}" class="btn btn-primary fs-6 fw-bold">الرجوع</a>
-                        </div>
-                    </div>
+                    @endif
                 </div>
             </div>
 
         @elseif($show == "add")
             <div class="col-10 mx-auto mb-5">
                 <div class="card mx-auto">
-                    <h5 class="my-4 color text-center">انشاء القسم جديد</h5>
+                    <h5 class="my-4 color text-center">انشاء المخزن جديد</h5>
                     <div class="card-body">
                         <form class="row g-3 mb-5" wire:submit.prevent='create' action="" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="col-8 mx-auto">
-                                <label for="exampleFormControlInput1" class=" form-label color">اسم القسم :</label>
-                                <input type="text" name="name" wire:model='name' class="form-control g-3 in-valid" id="exampleFormControlInput1" placeholder="ادخل اسم القسم " />
+                                <label for="exampleFormControlInput1" class=" form-label color">اسم المخزن :</label>
+                                <input type="text" name="name" wire:model='name' class="form-control g-3 in-valid" id="exampleFormControlInput1" placeholder="ادخل اسم المخزن " />
                                 <small class="text-danger">@error('name') {{ $message }} @enderror</small>
-                            </div>
-                            <div class="col-8 mx-auto">
-                                <label for="exampleFormControlInput1" class=" form-label color">صورة القسم :</label>
-                                <input type="file" name="img" wire:model='img' class="form-control g-3 in-valid" id="exampleFormControlInput1" placeholder=" " />
-                                <small class="text-danger">@error('img') {{ $message }} @enderror</small>
                             </div>
                             <button type="submit" class="btn btn-primary fs-5 col-8 mx-auto">انشاء</button>
                             <button type="button" wire:click='cancel' class="btn btn-secondary fs-5 col-8 mx-auto">الغاء</button>
@@ -119,18 +114,13 @@
         @elseif($show == "update")
             <div class="col-10 mx-auto mb-5">
                 <div class="card mx-auto">
-                    <h5 class="my-4 color text-center">تعديل القسم </h5>
+                    <h5 class="my-4 color text-center">تعديل المخزن </h5>
                     <div class="card-body">
                         <form class="row g-3 mb-5" action="" wire:submit.prevent='update' method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="col-8 mx-auto">
-                                <label class=" form-label color">اسم القسم :</label>
-                                <input wire:model='name' type="text" name="name" class="form-control g-3 @error('roleName') is-invalid  @enderror" id="exampleFormControlInput1" placeholder="ادخل اسم الصلاحية "/>
-                            </div>
-                            <div class="col-8 mx-auto">
-                                <label for="exampleFormControlInput1" class=" form-label color">صورة القسم :</label>
-                                <input type="file" name="img" wire:model='img' class="form-control g-3 in-valid" id="exampleFormControlInput1" placeholder=" " />
-                                <small class="text-danger">@error('img') {{ $message }} @enderror</small>
+                                <label class=" form-label color">اسم المخزن :</label>
+                                <input wire:model='name' type="text" name="name" class="form-control g-3 @error('roleName') is-invalid  @enderror" id="exampleFormControlInput1" placeholder="ادخل اسم المخزن "/>
                             </div>
                             <button type="submit" class="btn btn-primary fs-5 col-8 mx-auto">تعديل</button>
                             <button type="button" wire:click='cancel' class="btn btn-secondary fs-5 col-8 mx-auto">الغاء</button>

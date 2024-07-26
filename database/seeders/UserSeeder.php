@@ -18,6 +18,7 @@ class UserSeeder extends Seeder
             "email"=>"manager@gmail.com",
             "password"=>"$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",//password
             "gender"=>"male",
+            "salary"=>1000,
             "image"=>"img/user.jpg",
             "role_id"=>1,//manager
         ]);
@@ -27,6 +28,7 @@ class UserSeeder extends Seeder
             "email"=>"supervisor@gmail.com",
             "password"=>"$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",//password
             "gender"=>"male",
+            "salary"=>1000,
             "image"=>"img/user.jpg",
             "role_id"=>2,//supervisor
         ]);
@@ -36,6 +38,7 @@ class UserSeeder extends Seeder
             "email"=>"staff@gmail.com",
             "password"=>"$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",//password
             "gender"=>"male",
+            "salary"=>1000,
             "image"=>"img/user.jpg",
             "role_id"=>3,//staff
         ]);
@@ -45,6 +48,7 @@ class UserSeeder extends Seeder
             "email"=>"equipped@gmail.com",
             "password"=>"$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",//password
             "gender"=>"male",
+            "salary"=>1000,
             "image"=>"img/user.jpg",
             "role_id"=>4,//equipped
         ]);

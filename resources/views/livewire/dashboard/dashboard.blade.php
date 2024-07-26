@@ -133,6 +133,19 @@
         </div>
     @endif
 
+    @if(auth()->user()->role_id ==1)
+        <div class="col-lg-3 col-md-5 col-sm-7 my-3 ">
+            <div class="card mx-auto shadow rounded bg"  style="width:15rem;height:15rem;">
+                <div class="card-header mx-auto">
+                    <img src="{{ asset("img/dash/store.png") }}" alt=""  style="width: 10rem;height: 10rem;" class="card-img-top text-center">
+                </div>
+                <div class="card-body mx-auto">
+                    <a href="{{ route("storeTable") }}" class="btn btn-light color fs-6 fw-bold text-center rounded">المخازن</a>
+                </div>
+            </div>
+        </div>
+    @endif
+
         <div class="col-lg-3 col-md-5 col-sm-7 my-3 ">
             <div class="card mx-auto shadow rounded bg"  style="width:15rem;height:15rem;">
                 <div class="card-header mx-auto">

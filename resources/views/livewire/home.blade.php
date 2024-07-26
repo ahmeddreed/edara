@@ -18,7 +18,7 @@
 
                                     <div class="card-img-top mx-auto" style="height:8rem">
                                         @if($item->img)
-                                            <img class=" mx-auto" src="{{ asset("SectionImager/".$item->img) }}" alt="">
+                                            <img class=" mx-auto" src="{{ asset("storage/SectionImage/".$item->img) }}" alt="">
                                         @else
                                             <img class=" mx-auto" src="{{ asset("img/dash/profile.webp") }}" alt="">
                                         @endif
@@ -52,7 +52,13 @@
 
                                 @foreach($item->materials() as $item2)
                                     <div class="swiper-slide card shadow" style="width: 18rem;">
-                                        <img  src="{{ asset("img/img.jpg") }}" class="card-img-top w-100" alt="">
+                                        {{-- <img  src="{{ asset("storage/MaterialImage/".$item2->image) }}" class="card-img-top w-100" alt=""> --}}
+                                        {{-- @if($item->img)
+                                             <img class=" mx-auto" src="{{ asset("storage/SectionImage/".$item->img) }}" alt="">
+                                        @else
+                                            <img class=" mx-auto" src="{{ asset("img/dash/profile.webp") }}" alt="">
+                                        @endif --}}
+                                        <img class=" mx-auto" src="{{ asset("img/dash/profile.webp") }}" alt="">
                                         <div class="card-body m-2">
                                         <h5 class="card-title fs-5 fw-bold mb-3">{{ $item2->title }}</h5>
                                         <div class=" mt-4">

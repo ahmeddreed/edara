@@ -9,6 +9,7 @@ use Database\Seeders\UserSeeder;
 use Database\Seeders\SectionSeeder;
 use Database\Seeders\CategorySeeder;
 use Database\Seeders\MaterialSeeder;
+use Database\Seeders\SettingsSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,6 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RoleSeeder::class,
             UserSeeder::class,
+            SettingsSeeder::class,
             SectionSeeder::class,
             CategorySeeder::class,
             MaterialSeeder::class,

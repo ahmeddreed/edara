@@ -197,7 +197,8 @@ class SectionTable extends Component
     public function fileSettings($file){////////file settings///////
         $ext = $file->extension();
         $image_name = time().".".$ext;
-        $file->move("SectionImager/", $image_name);
+        $file->storeAs("public/SectionImage/", $image_name);
+        // $file->move("SectionImager/", $image_name);
 
         return $image_name;
     }

@@ -14,8 +14,8 @@ class MaterialSeeder extends Seeder
     public function run(): void
     {
         Material::create([
-            'title' => "Title",
-            'price' => 2000,
+            'title' => fake()->title(),
+            'price' => fake()->numberBetween(1500,2000),
             'description' => fake()->text(),
             "image"=>"img/img.jpg",
             'note' =>"test note",
@@ -24,8 +24,8 @@ class MaterialSeeder extends Seeder
         ]);
 
         Material::create([
-            'title' => "Title",
-            'price' => 2000,
+            'title' => fake()->title(),
+            'price' => fake()->numberBetween(1500,2000),
             'description' => fake()->text(),
             "image"=>"img/img.jpg",
             'note' =>"test note",
@@ -36,8 +36,8 @@ class MaterialSeeder extends Seeder
 
 
         Material::create([
-            'title' => "Title",
-            'price' => 2000,
+            'title' => fake()->title(),
+            'price' => fake()->numberBetween(1500,2000),
             'description' => fake()->text(),
             "image"=>"img/img.jpg",
             'note' =>"test note",
@@ -47,8 +47,8 @@ class MaterialSeeder extends Seeder
 
 
         Material::create([
-            'title' => "Title",
-            'price' => 2000,
+            'title' => fake()->title(),
+            'price' => fake()->numberBetween(1500,2000),
             'description' => fake()->text(),
             "image"=>"img/img.jpg",
             'note' =>"test note",
@@ -60,8 +60,8 @@ class MaterialSeeder extends Seeder
 
 
         Material::create([
-            'title' => "Title",
-            'price' => 2000,
+            'title' => fake()->title(),
+            'price' => fake()->numberBetween(1500,2000),
             'description' => fake()->text(),
             "image"=>"img/img.jpg",
             'note' =>"test note",
@@ -71,8 +71,8 @@ class MaterialSeeder extends Seeder
 
 
         Material::create([
-            'title' => "Title",
-            'price' => 2000,
+            'title' => fake()->title(),
+            'price' => fake()->numberBetween(1500,2000),
             'description' => fake()->text(),
             "image"=>"img/img.jpg",
             'note' =>"test note",
@@ -83,8 +83,8 @@ class MaterialSeeder extends Seeder
 
 
         Material::create([
-            'title' => "Title",
-            'price' => 2000,
+            'title' => fake()->title(),
+            'price' => fake()->numberBetween(1500,2000),
             'description' => fake()->text(),
             "image"=>"img/img.jpg",
             'note' =>"test note",

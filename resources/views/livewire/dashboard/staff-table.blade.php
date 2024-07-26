@@ -28,7 +28,7 @@
                         </form>
 
                         <div class="">
-                            <button  class="btn btn-success ms-2"><b>الرواتب</b></button>
+                            <button wire:click='giveSalaryForAll'  class="btn btn-success ms-2"><b>الرواتب</b></button>
                             <button wire:click='showChange("add")' class="btn btn-primary ms-2"><b>+</b></button>
                         </div>
 
@@ -59,7 +59,7 @@
                                                 {{$i++}}
                                             </th>
                                             <td>
-                                                <img style="width: 4rem;height: 4rem;" class="rounded" src="{{ asset("img/img.jpg")  }}" alt="">
+                                                <img style="width: 4rem;height: 4rem;" class="rounded" src="{{ asset("storage/UserImage/". $item->image)  }}" alt="">
 
                                             </td>
                                             <td>{{ $item->name}}</td>
@@ -68,7 +68,7 @@
                                             <td>{{ $item->gender }}</td>
                                             <td>{{ date($item->created_at) }}</td>
 
-                                            <td class="px-3">
+                                            <td class="p-3">
                                                 @php
                                                     $id_enc = Hash::make($item->id);
                                                     $date = date("m");
@@ -77,7 +77,8 @@
                                                     // $date = date("Y-m-d", strtotime("+1 month", $date));
                                                     // dd($date);
 
-                                                    $salaryDate =  auth()->user()->lastSalary();
+                                                    $salaryDate =  $item->lastSalary();
+
                                                 @endphp
                                                 @if($salaryDate == null or $salaryDate->created_at->format("m") !=  $date)
                                                     <button wire:click='showChange("salary",{{ $item->id }},"{{ $id_enc }}")' class="btn btn-success">الراتب</button>
@@ -119,7 +120,7 @@
                 <div class="card mx-auto">
                     <h5 class="my-4 color text-center">انشاء صلاحيه جديد</h5>
                     <div class="card-body">
-                        <form class="row g-3 mb-5" wire:submit.prevent='create'>
+                        <form class="row g-3 mb-5" wire:submit.prevent='create' enctype="multipart/form-data">
                             @csrf
                             <div class="col-8 mx-auto">
                                 <label for="exampleFormControlInput1" class=" form-label color">اسم الموظف :</label>
@@ -276,7 +277,7 @@
                             </p>
                         </h3>
                         <div class="my-5 mx-auto text-success text-center">
-                            <form action="" wire:submit.prevent='delete' method="post">
+                            <form action="" wire:submit.prevent='giveSalary' method="post">
                                 <button type="submit" class="btn btn-success">اعطاء</button>
                                 <button type="button" wire:click='cancel' class="btn btn-secondary fs-5 mx-auto">الغاء</button>
                             </form>

@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('operations_on_customer_accounts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("customer_accounts_id")->references('id')->on('customers');
+            $table->foreignId("customer_accounts_id")->references('id')->on('customers')->onUpdate('cascade')->onDelete('cascade');
             $table->integer("pay");
             $table->integer("old_number");
             $table->integer("new_number");
-            $table->foreignId("user_id")->references('id')->on('users')->nullable();
+            $table->foreignId("user_id")->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade')->nullable();
             $table->timestamps();
         });
     }

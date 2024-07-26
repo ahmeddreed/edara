@@ -22,12 +22,14 @@ class RoleSeeder extends Seeder
         ]);
 
         Role::create([
-            "name"=>"staff",
+            "name"=>"equipped",
         ]);
 
         Role::create([
-            "name"=>"equipped",
+            "name"=>"Delegate",
         ]);
+
+
 
     }
 }

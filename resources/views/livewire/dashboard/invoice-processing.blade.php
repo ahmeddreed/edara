@@ -155,6 +155,7 @@
                                             <thead class="fs-5 fw-bold color">
                                                 <tr>
                                                     <th scope="col">اسم العنصر</th>
+                                                    <th scope="col">المخزن</th>
                                                     <th scope="col">الكمية</th>
                                                     <th scope="col">السعر</th>
                                                     <th scope="col">مجموع الكلي</th>
@@ -166,6 +167,7 @@
                                                     @foreach($invoice->items() as $item)
                                                         <tr >
                                                             <th scope="col">{{$item->material()->title }}</th>
+                                                            <th scope="col">{{ $item->store()->name }}</th>
                                                             <th scope="col">{{ $item->Qty }}</th>
                                                             <th scope="col">{{ $item->price }}</th>
                                                             <th scope="col">{{ $item->cost_of_all }}</th>

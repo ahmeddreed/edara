@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string("title");
             $table->text("description");
             $table->string("image");
-            $table->foreignId("user_id")->references('id')->on('users');
-            $table->foreignId("category_id")->references('id')->on('categories');
+            $table->foreignId("user_id")->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId("category_id")->references('id')->on('categories')->onUpdate('cascade')->onDelete('cascade');
             $table->string("note",500)->nullable();
             $table->timestamps();
         });

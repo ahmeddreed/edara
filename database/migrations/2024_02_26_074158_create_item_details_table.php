@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('item_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("user_id")->references('id')->on('users')->nullable();
-            $table->foreignId("material_id")->references('id')->on('materials');
+            $table->foreignId("user_id")->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId("material_id")->references('id')->on('materials')->onUpdate('cascade')->onDelete('cascade');
             $table->string("key");
             $table->string("value");
             $table->timestamps();

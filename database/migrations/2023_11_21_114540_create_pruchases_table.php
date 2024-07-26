@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('pruchases', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("user_id")->references('id')->on('users')->nullable();
+            $table->foreignId("user_id")->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade')->nullable();
             $table->string("companyName");
             $table->integer("T_price")->default(0);
             $table->string("note",1000)->nullable();

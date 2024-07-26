@@ -87,19 +87,27 @@ class MaterialTable extends Component
         $section_name = ["add", "table", "update", "delete", "details"];
          if(in_array($name,$section_name)){
 
-            $this->material_id = $id;
-            $this->material = Material::find($id);
-            //set data
-            $this->title = $this->material->title;
-            $this->price = $this->material->price;
-            $this->discription = $this->material->discription;
-            $this->note = $this->material->salary;
-            $this->old_image = $this->material->image;
-            $this->category_id = $this->material->category_id;
+            if( $name == "update" ){
+                $this->material_id = $id;
+                $this->material = Material::find($id);
+                //set data
+                $this->title = $this->material->title;
+                $this->price = $this->material->price;
+                $this->discription = $this->material->discription;
+                $this->note = $this->material->salary;
+                $this->old_image = $this->material->image;
+                $this->category_id = $this->material->category_id;
+
+
+            }elseif($name == "delete" || $name == "details"){
+
+                $this->material_id = $id;
+                $this->material = Material::find($id);
+
+            }
 
             $this->show = $name;
             $this->material_id_enc = $enc;
-
 
 
          }else{
@@ -264,7 +272,7 @@ class MaterialTable extends Component
         ]);
 
         // insert data
-        ItemDetails::insert([
+        ItemDetails::create([
             'key'=> $this->key,
             'value'=> $this->value,
             'material_id'=> $this->material_id,
@@ -358,7 +366,8 @@ class MaterialTable extends Component
     public function fileSettings($file){////////file settings///////
         $ext = $file->extension();
         $image_name = time().".".$ext;
-        $file->storeAs("public/MaterialImager/", $image_name);
+        $file->storeAs("public/MaterialImage/", $image_name);
+        // $file->move("MaterialImager/", $image_name);
 
         return $image_name;
     }

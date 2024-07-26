@@ -3,6 +3,7 @@
 namespace App\Livewire\Dashboard;
 
 use App\Models\User;
+use App\Models\Store;
 use App\Models\Invoice;
 use Livewire\Component;
 use App\Models\Customer;
@@ -54,9 +55,12 @@ class SalesTable extends Component
     public $material_sale_price;
     public $material_Qty;
     public $material_total_cost;
+    public $material_expiration;
     public $material_note;
     public $side_bar_material_data = "material list";
 
+    public $stores;
+    public $store_id;
 
     public $customer_name;
     public $customer_id;
@@ -79,6 +83,7 @@ class SalesTable extends Component
     public function render(){
 
         $this->equippers = User::where("role_id",3)->get();
+        $this->stores = Store::all();
 
         if($this->date == null){//set date
 
@@ -197,13 +202,17 @@ class SalesTable extends Component
             'customer_name' => 'required',
             'invoice_type' => 'required',
             'operation_type' => 'required',
+            'store_id' => 'required|exsit:stores',
             'material_Qty' => 'required|numeric|min:1',
             'material_price' => 'nullable|numeric',
             'material_sale_price' => 'required|numeric|min:1',
+            'material_expiration' => 'nullable',
             'material_note' => 'nullable',
             'invoice_note' => 'nullable',
             'discount' => 'nullable',
         ]);
+
+
 
         if($this->operation_type == "out"){// in operation
 
@@ -228,6 +237,8 @@ class SalesTable extends Component
             "price" => $this->material_price,
             "sale_price" => $this->material_sale_price,
             "cost_of_all" => $cost_of_all,
+            "expiration" => $this->material_expiration,
+            "store_id" => $this->store_id,
             "note" => $this->material_note,
         ];
 
@@ -239,7 +250,7 @@ class SalesTable extends Component
         // set data of invoice total cost
         $this->invoice_total_cost = $this->totalPriceOfItem();
 
-        $this->reset("material_id","material_Qty","material_price","material_total_cost","material_name");
+        $this->reset("material_id","material_Qty","material_price","material_total_cost","material_name","material_expiration");
         return session()->flash("msg_s","تم اضافة العنصر بنجاح");
     }
 
@@ -251,11 +262,13 @@ class SalesTable extends Component
             'material_name' => 'required',
             'customer_name' => 'required',
             'invoice_type' => 'required',
+            'store_id' => 'required|exsit:stores',
             'operation_type' => 'required',
             'material_Qty' => 'required|numeric|min:1',
             'material_price' => 'nullable|numeric',
             'material_sale_price' => 'required|numeric|min:1',
             'material_note' => 'nullable',
+            'material_expiration' => 'nullable',
             'invoice_note' => 'nullable',
             'discount' => 'nullable',
         ]);
@@ -285,6 +298,8 @@ class SalesTable extends Component
             "price" => $this->material_price,
             "sale_price" => $this->material_sale_price,
             "cost_of_all" => $cost_of_all,
+            "expiration" => $this->material_expiration,
+            'store_id' =>$this->store_id,
             "note" => $this->material_note,
         ];
 
@@ -309,6 +324,9 @@ class SalesTable extends Component
         $this->material_Qty  = $itemData->Qty ;
         $this->material_price = $itemData->price;
         $this->material_total_cost = $itemData->cost_of_all;
+        $this->material_expiration = $itemData->expiration;
+        $this->material_note = $itemData->note;
+        $this->store_id = $itemData->store_id;
         $this->material_name = $itemData->material()->title;
     }
 
@@ -405,6 +423,7 @@ class SalesTable extends Component
         }elseif($invoice->customer_id == null){//the case is create
 
             $newCost = 0;
+
             //the customer not have an account
             if($customer->account() == null){
                 //create a new account for the customer
@@ -705,9 +724,9 @@ class SalesTable extends Component
 
         if(!$itemsOfInvoice){//create case
             NumberOfMaterial::create([
-                                    "material_id"=>$this->material_id,
-                                    "user_id"=>auth()->id(),
-                                ]);
+                "material_id"=>$this->material_id,
+                "user_id"=>auth()->id(),
+            ]);
         }
 
 

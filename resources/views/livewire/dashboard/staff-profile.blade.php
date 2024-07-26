@@ -24,7 +24,8 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-lg-4 col-ms-8 ">
-                                <img style="width: 18rem;height: 18rem;" src="{{ asset("img/dash/staff.png") }}" alt="">
+                                {{-- <img style="width: 18rem;height: 18rem;" src="{{ asset("storage/UserImage/".auth()->user()->image) }}" alt=""> --}}
+                                <img style="width: 18rem;height: 18rem;"  src="{{ asset("img/dash/staff.png")  }}" alt="">
 
                                 <div class="my-5">
                                     <a wire:click='showChange("update")' class="btn btn-primary fs-5 d-block my-3">تعديل البيانات </a>
@@ -136,9 +137,9 @@
                                                 <th scope="row">
                                                     {{$i++}}
                                                 </th>
-                                                {{-- <td>{{ $item->name}}</td>
+                                                <td>{{ auth()->user()->name}}</td>
                                                 <td>{{ $item->salary }}</td>
-                                                <td>{{ date($item->created_at) }}</td> --}}
+                                                <td>{{ date($item->created_at) }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>

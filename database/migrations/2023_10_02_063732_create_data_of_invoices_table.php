@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('data_of_invoices', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("invoice_id")->references('id')->on('invoices');
-            $table->foreignId("material_id")->references('id')->on('materials');
+            $table->foreignId("invoice_id")->references('id')->on('invoices')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId("material_id")->references('id')->on('materials')->onUpdate('cascade')->onDelete('cascade');
             $table->integer("Qty")->default(0);
             $table->integer("price")->default(0);
             $table->integer("sale_price")->default(0);
             $table->integer("cost_of_all")->default(0);
+            $table->string("expiration")->nullable();
             $table->boolean("equip")->default(0);
             $table->string("note",500)->nullable();
             $table->timestamps();

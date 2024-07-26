@@ -213,7 +213,7 @@
                                 <div class="col-lg-2 col-sm-10 my-2">
                                     <label for="" class="color form-lable mb-1 fw-bold fs-6">  نوع العملية</label>
 
-                                        <select @if ($operation_type !=null) @disabled(true) @endif  wire:model.live.debounce.100ms='operation_type' class="form-select" aria-label="Default select example">
+                                        <select @if ($operation_type) @disabled(true) @endif  wire:model.live.debounce.100ms='operation_type' class="form-select" aria-label="Default select example">
                                             <option>اختر</option>
                                             <option value="in">شراء </option>
                                             <option value="out">بيع</option>
@@ -233,7 +233,7 @@
                                 </div>
                                 <div class="col-lg-2 col-sm-10 my-2">
                                     <label for="" class="color form-lable mb-1 fw-bold fs-6"> التاريخ</label>
-                                    <input type="text" class="form-control" value="{{ now() }}" @disabled(true)>
+                                    <input type="text" class="form-control" value="{{ now()->format("Y/m/d") }}" @disabled(true)>
                                 </div>
 
                                 <br>
@@ -264,9 +264,41 @@
 
 
                                 <div class="col-lg-2 col-sm-10 my-2">
+                                    <label for="" class="color form-lable mb-1 fw-bold fs-6">المخزن</label>
+                                    <select wire:model='store_id' class="form-select" aria-label="Default select example">
+
+                                        @if($store_id)
+                                            @php
+                                                $store = App\Models\Store::find($store_id);
+                                                // dd($store->name)
+                                            @endphp
+                                            <option value="{{ $store->id }}" selected>{{ $store->name }}</option>
+                                        @else
+                                            <option>اختر</option>
+                                        @endif
+
+                                        @foreach ($stores as $item)
+                                            @if( $item->id != $store_id)
+                                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                            @endif
+                                        @endforeach
+
+                                    </select>
+                                    <small class="text-danger">@error('invoice_type') {{ $message }} @enderror</small>
+                                </div>
+
+
+                                <div class="col-lg-3 col-sm-10 my-2">
+                                    <label for="" class="color form-lable mb-1 fw-bold fs-6"> تاريخ الانتهاء</label>
+                                    <input type="date" wire:model='material_expiration' class="form-control" value="" >
+                                    <small class="text-danger">@error('material_expiration') {{ $message }} @enderror</small>
+                                </div>
+
+                                <div class="col-lg-2 col-sm-10 my-2">
                                     <label for="" class="color form-lable mb-1 fw-bold fs-6 "> مجموع الكلي</label>
                                     <input wire:model='material_total_cost' type="number" class="form-control"  @disabled(true)>
                                 </div>
+
                                 <div class="col-lg-3 col-sm-10 my-2">
                                     <label for="" class="color form-lable mb-1 fw-bold fs-6 ">الملاحظة</label>
                                     <input type="text" class="form-control" value="الملاحظة">

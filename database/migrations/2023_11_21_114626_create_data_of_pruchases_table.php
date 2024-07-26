@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('data_of_pruchases', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("user_id")->references('id')->on('users')->nullable();
-            $table->foreignId("pruchase_id")->references('id')->on('pruchases')->nullable();
-            $table->foreignId("material_id")->references('id')->on('materials');
+            $table->foreignId("user_id")->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade')->nullable();
+            $table->foreignId("pruchase_id")->references('id')->on('pruchases')->onUpdate('cascade')->onDelete('cascade')->nullable();
+            $table->foreignId("material_id")->references('id')->on('materials')->onUpdate('cascade')->onDelete('cascade');
             $table->string("note",1000)->nullable();
             $table->timestamps();
         });

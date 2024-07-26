@@ -1,4 +1,5 @@
 <?php
+use App\Livewire\Dashboard\StoreTable;
 use App\Livewire\Home;
 use App\Livewire\Invoice;
 use App\Livewire\Profile;
@@ -22,6 +23,7 @@ use App\Livewire\Dashboard\CustomerTable;
 use App\Livewire\Dashboard\MaterialTable;
 use App\Livewire\Dashboard\InvoiceProcessing;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,6 +32,7 @@ use App\Livewire\Dashboard\InvoiceProcessing;
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
+| Installment-Management-System
 |
 */
 
@@ -54,6 +57,7 @@ Route::get("category-table",CategoryTable::class)->name("categoryTable")->middle
 Route::get("staffTable",StaffTable::class)->name("staffTable")->middleware("auth");
 Route::get("staff-profile",StaffProfile::class)->name("staff.profile")->middleware("auth");
 Route::get("customer-table",CustomerTable::class)->name("customerTable")->middleware("auth");
+Route::get("store-table",StoreTable::class)->name("storeTable")->middleware("auth");
 Route::get("material-table",MaterialTable::class)->name("materialTable")->middleware("auth");
 Route::get("sales-table",SalesTable::class)->name("salesTable")->middleware("auth");
 Route::get("imf",IMFOperation::class)->name("imf")->middleware("auth");

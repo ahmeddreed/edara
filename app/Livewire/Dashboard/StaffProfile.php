@@ -98,14 +98,15 @@ class StaffProfile extends Component
                 //settings of picture
                 $image_name = $this->fileSettings($this->image);
             }else{//not change the picture
-                $image_name = "";
+                $image_name = null;
             }
 
             // Update User
             $staff->name= $this->name;
             $staff->gender= $this->gender;
+
             if($this->image != null){//change the picture
-                $staff->picture= $image_name;
+                $staff->image= $image_name;
             }
 
         //save the change
@@ -125,8 +126,16 @@ class StaffProfile extends Component
         $staff->name= $this->name;
         $staff->email= $this->email;
         $staff->gender= $this->gender;
-        if($this->image != null){//change the picture
-            $staff->picture= $image_name;
+
+        //he is have a image
+        if($this->image != null){
+            // Delete the Old Picture
+            if(Storage::exists("public/UseImager",$this->old_image)){
+                Storage::delete("public/UseImager/".$this->old_image);
+            }
+            //settings of picture
+            $image_name = $this->fileSettings($this->image);
+            $staff->image =  $image_name;
         }
 
         //save the change
@@ -171,9 +180,18 @@ public function changePassword()
 
 
 
-   public function cancel(){////////reset the data///////
+public function cancel(){////////reset the data///////
 
     $this->reset();
+}
+
+
+public function fileSettings($file){////////file settings///////
+    $ext = $file->extension();
+    $image_name = time().".".$ext;
+    $file->storeAs("public/UserImage/", $image_name);
+
+    return $image_name;
 }
 
 

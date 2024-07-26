@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('customer_accounts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("customer_id")->references('id')->on('customers')->unique();
+            $table->foreignId("customer_id")->references('id')->on('customers')->onUpdate('cascade')->onDelete('cascade')->unique();
             $table->integer("total_cost")->default(0);
             $table->string("note")->nullable();
             $table->timestamps();

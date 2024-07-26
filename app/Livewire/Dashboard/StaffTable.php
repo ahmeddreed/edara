@@ -4,6 +4,7 @@ namespace App\Livewire\Dashboard;
 
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Salary;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
@@ -23,6 +24,7 @@ class StaffTable extends Component
     public $staff_id;
     public $staff_id_enc = "";
     public $staff;
+
 
 
     //Fields
@@ -64,11 +66,12 @@ class StaffTable extends Component
 
     public function showData(){///////// show defualt data ////////
 
-        $data = User::where("role_id","!=",1)->paginate(10);
+        // $data = User::where("role_id","!=",1)->paginate(10);
+        $data = User::latest()->paginate(10);
 
         if($this->search){//searching
 
-            $data = User::where("role_id","!=",1)->where("manager",auth()->user()->manager)->where('name','like','%'.$this->search.'%')->paginate(10);
+            $data = User::where("role_id","!=",1)->where('name','like','%'.$this->search.'%')->paginate(10);
         }
 
         return $data;
@@ -78,7 +81,7 @@ class StaffTable extends Component
 
     public function showChange($name, $id = null,$enc =null){/////////show page section////////
 
-         if($name === "update" or $name === "delete" and $id != null and $enc != null){
+         if($name === "update" or $name === "delete" or $name === "salary" and $id != null){
 
             $this->staff_id = $id;
             $this->staff = User::find($id);
@@ -114,17 +117,18 @@ class StaffTable extends Component
         //Image settings
         $image_name = $this->fileSettings($this->image);
 
+
         // insert the data
-        User::create([
+        $user = User::create([
             'name'=> $this->name,
             'email'=> $this->email,
             'role_id' => $this->role_id,
             'password'=> Hash::make($this->password),
             'gender'=> $this->gender,
             'salary'=> $this->salary,
-            'picture'=> $image_name,
+            'image'=> $image_name,
         ]);
-
+        dd($user);
 
 
         // message
@@ -244,6 +248,85 @@ class StaffTable extends Component
 
 
 
+    public function giveSalary(){
+
+        $staff =  $this->staff;
+        $salaryDate =  $staff->lastSalary();
+        $date = date("m");
+
+        if(!$staff){
+            //error message
+            return session()->flash("msg_e","المستخدم غير موجود ");
+        }
+
+        if($salaryDate == null or $salaryDate->created_at->format("m") !=  $date){
+
+            $salary = Salary::create([
+                        "user_id"=> $staff->id,
+                        "salary"=> $staff->salary,]);
+
+            if($salary){
+                session()->flash("msg_s","تم اعطاء الراتب بنجاح");
+
+            }
+            else{
+                session()->flash("msg_e","عذرا يوجد خطأ");
+            }
+
+
+        }else{
+            session()->flash("msg_e","الموظف مستلم للراتب");
+        }
+
+        //reset the data
+        $this->reset();
+
+
+    }
+
+
+
+
+    public function giveSalaryForAll(){
+
+        $staffs = User::all();
+        $received = 0;
+        $notReceived = 0;
+        $receivedMsg = "";
+        $notReceivedMsg = "";
+        foreach($staffs as $staff){
+
+            $salaryDate =  $staff->lastSalary();
+            $date = date("m");
+
+            if($salaryDate == null or $salaryDate->created_at->format("m") !=  $date){
+
+                $salary = Salary::create([
+                            "user_id"=> $staff->id,
+                            "salary"=> $staff->salary,]);
+
+                if($salary){
+                    $received += 1;
+                }
+
+
+            }else{
+                $notReceived += 1;
+            }
+
+        }
+
+
+        $receivedMsg =  " تم اعطاء الراتب بنجاح ل "."(".$received.")";
+        $notReceivedMsg =  " وعدد المستلمين من قبل هم "."(".$notReceived.")";
+
+        session()->flash("msg_s",$receivedMsg." - ".$notReceivedMsg);
+
+        //reset the data
+        $this->reset();
+    }
+
+
     public function cancel(){////////reset the data///////
 
         $this->reset();
@@ -254,7 +337,7 @@ class StaffTable extends Component
     public function fileSettings($file){////////file settings///////
         $ext = $file->extension();
         $image_name = time().".".$ext;
-        $file->storeAs("public/UserImager/", $image_name);
+        $file->storeAs("public/UserImage/", $image_name);
 
         return $image_name;
     }

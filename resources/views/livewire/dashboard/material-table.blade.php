@@ -248,12 +248,11 @@
                 </div>
             </div>
 
-            @elseif($show == "details")
+        @elseif($show == "details")
             <div class="col-10 mx-auto mb-5">
                 <div class="card mx-auto">
                     <h5 class="my-4 color text-center"> تفاصيل المادة</h5>
                     <div class="card-body">
-                        @if($material->details()->count() > 0)
                             <div class="table-responsive">
                                 <table class="table color">
                                     <thead class="text-primary">
@@ -270,8 +269,9 @@
                                         @php
                                             $i=1;
                                         @endphp
-                                        @if($material->details())
-                                            @foreach($material->details() as $item)
+
+                                        @if($material->ItemDetails())
+                                            @foreach($material->ItemDetails() as $item)
                                             <tr>
                                                 <th scope="row">
                                                     {{$i++}}
@@ -299,8 +299,6 @@
                                     </tbody>
                                 </table>
                             </div>
-                        @endif
-
                         <hr class="color">
                         <form class="row g-3 mb-5" wire:submit.prevent='addDetails'>
                             @csrf

@@ -89,7 +89,7 @@ class User extends Authenticatable
 
     public function salary(){
 
-        return $this->hasMany(Salary::class);
+        return $this->hasMany(Salary::class)->get();
     }
 
 

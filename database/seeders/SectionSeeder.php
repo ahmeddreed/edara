@@ -15,16 +15,18 @@ class SectionSeeder extends Seeder
     {
         Section::create([
             "name"=>"الملابس",
+            "user_id"=>1,
         ]);
 
         Section::create([
-            "name"=>"احذية ",
-        ]);
+            "name"=>"احذية" ,
+            "user_id"=>1,
+            ]);
 
         Section::create([
-            "name"=>"جنط",
+            "name"=>"جنط" ,
+            "user_id"=>1,
         ]);
-
 
     }
 }

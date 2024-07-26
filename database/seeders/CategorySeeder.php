@@ -16,21 +16,25 @@ class CategorySeeder extends Seeder
         Category::create([
             "name"=>"الملابس احجام الطبيعية",
             "section_id"=>1,
+            "user_id"=>1,
         ]);
 
         Category::create([
             "name"=>"الملابس احجام خاصة" ,
             "section_id"=>1,
+            "user_id"=>1,
         ]);
 
         Category::create([
             "name"=>"احذية احجام خاصة" ,
             "section_id"=>2,
+            "user_id"=>1,
         ]);
 
         Category::create([
             "name"=>"احذية احجام خاصة" ,
             "section_id"=>2,
+            "user_id"=>1,
         ]);
     }
 }

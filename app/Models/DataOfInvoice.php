@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Store;
 use App\Models\Invoice;
 use App\Models\Material;
 use Illuminate\Database\Eloquent\Model;
@@ -18,6 +19,7 @@ class DataOfInvoice extends Model
         "price",
         "Qty",
         "cost_of_all",
+        "expiration",
         "equip",
         "note",
 
@@ -26,6 +28,11 @@ class DataOfInvoice extends Model
     public function material() {
 
         return $this->belongsTo(Material::class, 'material_id')->first();
+    }
+
+    public function store() {
+
+        return $this->belongsTo(Store::class, 'material_id')->first();
     }
 
     public function invoice() {
