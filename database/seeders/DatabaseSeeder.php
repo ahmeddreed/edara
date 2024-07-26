@@ -8,6 +8,7 @@ use Database\Seeders\RoleSeeder;
 use Database\Seeders\UserSeeder;
 use Database\Seeders\SectionSeeder;
 use Database\Seeders\CategorySeeder;
+use Database\Seeders\CustomerSeeder;
 use Database\Seeders\MaterialSeeder;
 use Database\Seeders\SettingsSeeder;
 
@@ -25,6 +26,7 @@ class DatabaseSeeder extends Seeder
             SettingsSeeder::class,
             SectionSeeder::class,
             CategorySeeder::class,
+            CustomerSeeder::class,
             MaterialSeeder::class,
         ]);
         // \App\Models\User::factory(10)->create();

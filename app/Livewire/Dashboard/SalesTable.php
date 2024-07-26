@@ -202,7 +202,7 @@ class SalesTable extends Component
             'customer_name' => 'required',
             'invoice_type' => 'required',
             'operation_type' => 'required',
-            'store_id' => 'required|exsit:stores',
+            'store_id' => 'required',
             'material_Qty' => 'required|numeric|min:1',
             'material_price' => 'nullable|numeric',
             'material_sale_price' => 'required|numeric|min:1',
@@ -725,7 +725,7 @@ class SalesTable extends Component
         if(!$itemsOfInvoice){//create case
             NumberOfMaterial::create([
                 "material_id"=>$this->material_id,
-                "user_id"=>auth()->id(),
+                // "user_id"=>auth()->id(),
             ]);
         }
 

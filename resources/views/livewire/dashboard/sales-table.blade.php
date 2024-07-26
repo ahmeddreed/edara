@@ -152,8 +152,11 @@
                                     <span>المحافظة</span> : <span>{{ $customer->governorate }}</span>
                                     </p>
                                     <p class="color">
-                                    <span>حساب الزبون</span> : <span>{{( $customer->account()->total_cost ? $customer->account()->total_cost : 0 ) }}</span>
+                                        @if ($customer->account())
+                                            <span>حساب الزبون</span> : <span>{{( $customer->account()->total_cost ? $customer->account()->total_cost : 0 ) }}</span>
+                                        @endif
                                     </p>
+
                                 @else
                                     <p class="text-center text-info fs-5">لا يوجد شي</p>
                                 @endif
