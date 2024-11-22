@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\AdsImage;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Settings extends Model
 {
@@ -14,5 +15,13 @@ class Settings extends Model
         'img',
         'copy_right',
         'des',
+        'phone1',
+        'phone2',
     ];
+
+
+    public function ads(){
+
+        return $this->hasMany(AdsImage::class);
+    }
 }

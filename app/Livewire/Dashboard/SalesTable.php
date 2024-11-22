@@ -428,7 +428,7 @@ class SalesTable extends Component
             if($customer->account() == null){
                 //create a new account for the customer
                 CustomerAccount::create([
-                    'customer_id' => $customer->customer_id,
+                    'customer_id' => $customer->id,
                 ]);
                 //total cost is by defualt 0
             }
@@ -480,9 +480,11 @@ class SalesTable extends Component
 
         //verify the invoice if it not verify
         if(!$invoice->confirm()->invoice_verify){
+
             $confirmTheInvoice = ConfirmTheInvoice::where("invoice_id",$invoice->id)->first();
             $confirmTheInvoice->invoice_Verify = $this->invoice_verify;
             $confirmTheInvoice->update();
+
         }
 
 
@@ -723,7 +725,7 @@ class SalesTable extends Component
         $item = DataOfInvoice::find($this->item_id);
 
         if(!$itemsOfInvoice){//create case
-            NumberOfMaterial::create([
+            $itemsOfInvoice = NumberOfMaterial::create([
                 "material_id"=>$this->material_id,
                 // "user_id"=>auth()->id(),
             ]);

@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="{{ asset("css/style.css") }}" />
     <link rel="stylesheet" href="{{ asset("css/bootstrap.min.css") }}" />
+    {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
 
     <!-- Custom styles -->
     <style>
@@ -63,10 +64,12 @@
   </head>
 
     @php
-        $settingsData = DB::table('settings')->find(1);
+        // $settingsData = DB::table('settings')->where("id",1)->first();
+        $settingsData = App\Models\Settings::find(1);
+        $ads = $settingsData->ads()->get();
     @endphp
 
-  <body class="@if(request()->routeIs("login") || request()->routeIs("customerLogin") || request()->routeIs("CustomerRegister")) bg @endif">
+  <body dir="rtl" class="@if(request()->routeIs("login") || request()->routeIs("customerLogin") || request()->routeIs("CustomerRegister")) bg @endif">
     <!-- Start your project here-->
         <!-- navbar conbonent-->
 
@@ -75,7 +78,43 @@
         <x-Main.navbar :title='$settingsData->title'></x-Main.navbar>
         @if(request()->routeIs("home"))
 
-            <x-Main.hero :title='$settingsData->title' :des='$settingsData->des'></x-Main.hero>
+        {{-- hero section  --}}
+            <div class="row mb-5">
+                <div class="col-lg-12 mx-auto mb-1 ">
+                    <div class="card shadow ">
+                        <div class="card-body bg d-flex justify-content-between rounded">
+
+                            <div class="swiper mySwiper ">
+                                <div class="swiper-wrapper">
+
+                                    @foreach($ads as $item)
+                                        <div class="card swiper-slide m-2 " data-swiper-autoplay="8000" style="max-width: 100%; max-height: 75%" >
+
+                                            <div class="position-relative card-img-top mx-auto" style="height: 10%" >
+                                                @if($item->image)
+                                                    <img class=" mx-auto" src="{{ asset("storage/settingsImage/".$item->image) }}" alt="">
+                                                    <h3 class="mx-auto text-light shadow" style="position: absolute; bottom:6%; left:50%;">
+                                                       {{$item->title}}
+                                                    </h3>
+                                                @else
+                                                    <img class=" mx-auto" src="{{ asset("img/dash/profile.webp") }}" alt="">
+                                                @endif
+
+                                            </div>
+                                        </div>
+                                    @endforeach
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            {{-- end hero section  --}}
+            {{-- <x-Main.hero :title='$settingsData->title' :des='$settingsData->des' :heroAds='$slide' :heroAds='$settingsData->ads()'></x-Main.hero> --}}
         @endif
 
     @endif
@@ -83,13 +122,16 @@
 
     @yield("content")
 
-    <div class="container mx-auto mt-5">
+    <div  class="container mx-auto mt-5">
         {{ $slot }}
     </div>
 
     <br>
-        <x-Main.footer :copy_right='$settingsData->copy_right'></x-Main.footer>
-        <script src="{{ asset("js/swiper.js") }}"></script>
+    @if (!request()->routeIs("login"))
+        <x-Main.footer  :settingsData='$settingsData'></x-Main.footer>
+    @endif
+
+    <script src="{{ asset("js/swiper.js") }}"></script>
     <!-- End your project here-->
     <script src="{{ asset("js/bootstrap.bundle.js") }}"></script>
 
@@ -99,30 +141,15 @@
     {{-- <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script> --}}
     <script>
         var swiper = new Swiper(".mySwiper", {
-          slidesPerView: 1.5,
+          slidesPerView: 1,
           spaceBetween: 10,
-          freeMode: true,
+          autoplay: true,
           pagination: {
             el: ".swiper-pagination",
             clickable: true,
           },
           breakpoints: {
-            500: {
-              slidesPerView: 1.5,
-              spaceBetween: 10,
-            },
-            580: {
-              slidesPerView: 2.5,
-              spaceBetween: 10,
-            },
-            768: {
-              slidesPerView: 3,
-              spaceBetween: 10,
-            },
-            1024: {
-              slidesPerView: 4,
-              spaceBetween: 10,
-            },
+
           },
         });
 
@@ -154,6 +181,8 @@
             },
           },
         });
+
+
       </script>
 @livewireScripts
 </body>

@@ -51,7 +51,7 @@ class Invoice extends Model
     public function confirm() {
 
         // return ConfirmTheInvoice::find($this->id);
-        return $this->hasOne(ConfirmTheInvoice::class)->first();
+        return $this->hasOne(ConfirmTheInvoice::class,"invoice_id")->first();
     }
 
     public function materialCount(){//get count of material
@@ -73,4 +73,7 @@ class Invoice extends Model
 
         return $totalCost;
     }
+
+
+
 }

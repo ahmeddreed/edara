@@ -1,11 +1,11 @@
 <?php
-use App\Livewire\Dashboard\StoreTable;
 use App\Livewire\Home;
 use App\Livewire\Invoice;
 use App\Livewire\Profile;
 use App\Livewire\Auth\login;
 use App\Livewire\ItemDetails;
 use App\Http\Controllers\logout;
+use App\Livewire\Dashboard\Reports;
 use App\Livewire\Auth\CustomerLogin;
 use App\Livewire\Dashboard\Settings;
 use App\Livewire\Auth\CustomerLogout;
@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 use App\Livewire\Dashboard\RolesTable;
 use App\Livewire\Dashboard\SalesTable;
 use App\Livewire\Dashboard\StaffTable;
+use App\Livewire\Dashboard\StoreTable;
 use App\Livewire\Auth\CustomerRegister;
 use App\Livewire\Dashboard\IMFOperation;
 use App\Livewire\Dashboard\SectionTable;
@@ -22,7 +23,7 @@ use App\Livewire\Dashboard\CategoryTable;
 use App\Livewire\Dashboard\CustomerTable;
 use App\Livewire\Dashboard\MaterialTable;
 use App\Livewire\Dashboard\InvoiceProcessing;
-
+use App\Livewire\ShowItems;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,7 @@ use App\Livewire\Dashboard\InvoiceProcessing;
 */
 
 Route::get("home/{id?}",Home::class)->name("home");
+Route::get("show-items/{id}",ShowItems::class)->name("showItems");
 // Route::get("/{id}",Home::class)->name("home");
 Route::get("/invoice",Invoice::class)->name("invoice");
 Route::get("/customer-profile",Profile::class)->name("customer-profile")->middleware("customerAuth");
@@ -62,4 +64,5 @@ Route::get("material-table",MaterialTable::class)->name("materialTable")->middle
 Route::get("sales-table",SalesTable::class)->name("salesTable")->middleware("auth");
 Route::get("imf",IMFOperation::class)->name("imf")->middleware("auth");
 Route::get("invoice-processing",InvoiceProcessing::class)->name("invoiceProcessing")->middleware("auth");
+Route::get("reports",Reports::class)->name("reports")->middleware("auth");
 Route::get("settings",Settings::class)->name("settings")->middleware("auth");

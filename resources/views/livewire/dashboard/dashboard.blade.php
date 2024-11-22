@@ -16,7 +16,7 @@
                     <img src="{{ asset("img/dash/profile.webp") }}" alt=""  style="width: 10rem;height: 10rem;" class="card-img-top text-center">
                 </div>
                 <div class="card-body mx-auto">
-                    <a href="{{ route("staff.profile") }}" class="btn btn-light color fs-6 fw-bold text-center rounded">الملف الشخصي</a>
+                    <a wire:navigate href="{{ route("staff.profile") }}" class="btn btn-light color fs-6 fw-bold text-center rounded">الملف الشخصي</a>
                 </div>
             </div>
         </div>
@@ -29,7 +29,7 @@
                     <img src="{{ asset("img/dash/role.png") }}" alt=""  style="width: 10rem;height: 10rem;" class="card-img-top text-center">
                 </div>
                 <div class="card-body mx-auto">
-                    <a href="{{ route("rolesTable") }}" class="btn btn-light color fs-6 fw-bold text-center rounded">الصلاحيات</a>
+                    <a wire:navigate href="{{ route("rolesTable") }}" class="btn btn-light color fs-6 fw-bold text-center rounded">الصلاحيات</a>
                 </div>
             </div>
         </div>
@@ -43,7 +43,7 @@
                     <img src="{{ asset("img/dash/staff.png") }}" alt=""  style="width: 10rem;height: 10rem;" class="card-img-top text-center">
                 </div>
                 <div class="card-body mx-auto">
-                    <a href="{{ route("staffTable") }}" class="btn btn-light color fs-6 fw-bold text-center rounded">موظفين</a>
+                    <a wire:navigate href="{{ route("staffTable") }}" class="btn btn-light color fs-6 fw-bold text-center rounded">موظفين</a>
                 </div>
             </div>
         </div>
@@ -59,7 +59,7 @@
                     <img src="{{ asset("img/dash/customer.png") }}" alt=""  style="width: 10rem;height: 10rem;" class="card-img-top text-center">
                 </div>
                 <div class="card-body mx-auto">
-                    <a href="{{ route("customerTable") }}" class="btn btn-light color fs-6 fw-bold text-center rounded">العملاء</a>
+                    <a wire:navigate href="{{ route("customerTable") }}" class="btn btn-light color fs-6 fw-bold text-center rounded">العملاء</a>
                 </div>
             </div>
         </div>
@@ -73,7 +73,7 @@
                     <img src="{{ asset("img/dash/sales.webp") }}" alt=""  style="width: 10rem;height: 10rem;" class="card-img-top text-center">
                 </div>
                 <div class="card-body mx-auto">
-                    <a href="{{ route("salesTable") }}" class="btn btn-light color fs-6 fw-bold text-center rounded">العمليات </a>
+                    <a wire:navigate href="{{ route("salesTable") }}" class="btn btn-light color fs-6 fw-bold text-center rounded">العمليات </a>
                 </div>
             </div>
         </div>
@@ -87,7 +87,7 @@
                     <img src="{{ asset("img/dash/imf.png") }}" alt=""  style="width: 10rem;height: 10rem;" class="card-img-top text-center">
                 </div>
                 <div class="card-body mx-auto">
-                    <a href="{{ route("imf") }}" class="btn btn-light color fs-6 fw-bold text-center rounded">الصندوق</a>
+                    <a wire:navigate href="{{ route("imf") }}" class="btn btn-light color fs-6 fw-bold text-center rounded">الصندوق</a>
                 </div>
             </div>
         </div>
@@ -100,7 +100,7 @@
                     <img src="{{ asset("img/dash/material.png") }}" alt=""  style="width: 10rem;height: 10rem;" class="card-img-top text-center">
                 </div>
                 <div class="card-body mx-auto">
-                    <a href="{{ route("materialTable") }}" class="btn btn-light color fs-6 fw-bold text-center rounded">المواد</a>
+                    <a wire:navigate href="{{ route("materialTable") }}" class="btn btn-light color fs-6 fw-bold text-center rounded">المواد</a>
                 </div>
             </div>
         </div>
@@ -113,7 +113,7 @@
                     <img src="{{ asset("img/dash/section.png") }}" alt=""  style="width: 10rem;height: 10rem;" class="card-img-top text-center">
                 </div>
                 <div class="card-body mx-auto">
-                    <a href="{{ route("sectionTable") }}" class="btn btn-light color fs-6 fw-bold text-center rounded">الاقسام</a>
+                    <a wire:navigate href="{{ route("sectionTable") }}" class="btn btn-light color fs-6 fw-bold text-center rounded">الاقسام</a>
                 </div>
             </div>
         </div>
@@ -127,7 +127,7 @@
                     <img src="{{ asset("img/dash/category.png") }}" alt=""  style="width: 10rem;height: 10rem;" class="card-img-top text-center">
                 </div>
                 <div class="card-body mx-auto">
-                    <a href="{{ route("categoryTable") }}" class="btn btn-light color fs-6 fw-bold text-center rounded">الفئات</a>
+                    <a wire:navigate href="{{ route("categoryTable") }}" class="btn btn-light color fs-6 fw-bold text-center rounded">الفئات</a>
                 </div>
             </div>
         </div>
@@ -140,7 +140,7 @@
                     <img src="{{ asset("img/dash/store.png") }}" alt=""  style="width: 10rem;height: 10rem;" class="card-img-top text-center">
                 </div>
                 <div class="card-body mx-auto">
-                    <a href="{{ route("storeTable") }}" class="btn btn-light color fs-6 fw-bold text-center rounded">المخازن</a>
+                    <a wire:navigate href="{{ route("storeTable") }}" class="btn btn-light color fs-6 fw-bold text-center rounded">المخازن</a>
                 </div>
             </div>
         </div>
@@ -152,24 +152,37 @@
                     <img src="{{ asset("img/dash/order.png") }}" alt=""  style="width: 10rem;height: 10rem;" class="card-img-top text-center">
                 </div>
                 <div class="card-body mx-auto">
-                    <a href="{{ route("invoiceProcessing") }}" class="btn btn-light color fs-6 fw-bold text-center rounded">الطلبات</a>
+                    <a wire:navigate href="{{ route("invoiceProcessing") }}" class="btn btn-light color fs-6 fw-bold text-center rounded">الطلبات</a>
                 </div>
             </div>
         </div>
 
 
 
-    @if(auth()->user()->role_id !=5)
+    @if(auth()->user()->role_id ==1)
+        <div class="col-lg-3 col-md-5 col-sm-7 my-3 ">
+            <div class="card mx-auto shadow rounded bg"  style="width:15rem;height:15rem;">
+                <div class="card-header mx-auto">
+                    <img src="{{ asset("img/dash/report.png") }}" alt=""  style="width: 10rem;height: 10rem;" class="card-img-top text-center">
+                </div>
+                <div class="card-body mx-auto">
+                    <a wire:navigate href="{{ route("reports") }}" class="btn btn-light color fs-6 fw-bold text-center rounded"> التقارير</a>
+                </div>
+            </div>
+        </div>
+
         <div class="col-lg-3 col-md-5 col-sm-7 my-3 ">
             <div class="card mx-auto shadow rounded bg"  style="width:15rem;height:15rem;">
                 <div class="card-header mx-auto">
                     <img src="{{ asset("img/dash/information.png") }}" alt=""  style="width: 10rem;height: 10rem;" class="card-img-top text-center">
                 </div>
                 <div class="card-body mx-auto">
-                    <a href="{{ route("settings") }}" class="btn btn-light color fs-6 fw-bold text-center rounded">اعدادات النظام</a>
+                    <a wire:navigate href="{{ route("settings") }}" class="btn btn-light color fs-6 fw-bold text-center rounded">اعدادات النظام</a>
                 </div>
             </div>
         </div>
+
+
     @endif
 
         <div class="col-lg-3 col-md-5 col-sm-7 my-3 ">
@@ -178,7 +191,7 @@
                     <img src="{{ asset("img/dash/home.png") }}" alt=""  style="width: 10rem;height: 10rem;" class="card-img-top text-center">
                 </div>
                 <div class="card-body mx-auto">
-                    <a href="{{ route("home") }}" class="btn btn-light color fs-6 fw-bold text-center rounded">الرائسية</a>
+                    <a wire:navigate href="{{ route("home") }}" class="btn btn-light color fs-6 fw-bold text-center rounded">الرائسية</a>
                 </div>
             </div>
         </div>

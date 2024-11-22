@@ -20,9 +20,9 @@ class DataOfInvoice extends Model
         "Qty",
         "cost_of_all",
         "expiration",
+        "store_id",
         "equip",
         "note",
-
     ];
 
     public function material() {

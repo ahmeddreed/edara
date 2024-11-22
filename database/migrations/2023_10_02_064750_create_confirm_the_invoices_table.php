@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('confirm_the_invoices', function (Blueprint $table) {
             $table->id();
             $table->foreignId("invoice_id")->references('id')->on('invoices')->onUpdate('cascade')->onDelete('cascade')->unique();
-            $table->boolean("invoice_Verify")->default(0);
+            $table->boolean("invoice_verify")->default(0);
             $table->boolean("equip")->default(0);
             $table->timestamps();
         });

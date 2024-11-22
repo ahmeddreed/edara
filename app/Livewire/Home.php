@@ -20,8 +20,9 @@ class Home extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     // public $materials;
+    public $slide = 1;
+    public $settings = null;
     public $section = null;
-
     public $section_id = null;
 
     public $category_id = null;
@@ -44,7 +45,7 @@ class Home extends Component
             $categories = Category::where("section_id",$this->section_id)->get();
         }
 
-        return view('livewire.home',compact("categories"));
+        return view('livewire.home',compact("categories",));
     }
 
 
@@ -52,9 +53,19 @@ class Home extends Component
         $this->search =$name;
     }
 
+
+
+    public function changeSlide($slide=null){
+        if($slide ==null)
+            $this->slide = 0;
+        else
+            $this->slide = $slide;
+    }
+
     public function changeRoute($id = null){
         return $this->redirect('/home/'.$id, navigate: true);
     }
+
 
     public function resetData(){
         $this->section = Section::all();

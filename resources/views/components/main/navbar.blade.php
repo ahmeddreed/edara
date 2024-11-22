@@ -25,7 +25,7 @@
             @guest
                 @if (session()->has("customer") == null)
                     <li class="nav-item">
-                        <a wire:navigate class="nav-link active text-light fw-bold " aria-current="page" href="{{ route("customerLogin") }}">دخول الدخول</a>
+                        <a wire:navigate class="nav-link active text-light fw-bold " aria-current="page" href="{{ route("login") }}">دخول الدخول</a>
                     </li>
                 @else
                     <li class="nav-item">

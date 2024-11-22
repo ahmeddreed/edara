@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer("sale_price")->default(0);
             $table->integer("cost_of_all")->default(0);
             $table->string("expiration")->nullable();
+            $table->foreignId("store_id")->references('id')->on('stores')->onUpdate('cascade')->onDelete('cascade');
             $table->boolean("equip")->default(0);
             $table->string("note",500)->nullable();
             $table->timestamps();

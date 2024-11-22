@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('settings', function (Blueprint $table) {
+        Schema::create('ads_images', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('img');
-            $table->string('copy_right');
-            $table->string('phone1')->nullable();
-            $table->string('phone2')->nullable();
-            $table->text('des')->nullable();
+            $table->foreignId("settings_id")->references('id')->on('settings')->onUpdate('cascade')->onDelete('cascade');
+            $table->string("title");
+            $table->string("image");
+            $table->string("description");
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('settings');
+        Schema::dropIfExists('ads_images');
     }
 };
