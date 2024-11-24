@@ -63,7 +63,8 @@ Route::get("run-migrate",function(){
     }
 })->name("run-migrate");
 
-// Route::get("home/{id?}",Home::class)->name("home");
+//Route::get("home/{id?}",Home::class)->name("home");
+
 // Route::get("/{id}",Home::class)->name("home");
 Route::get("show-items/{id}",ShowItems::class)->name("showItems");
 Route::get("/invoice",Invoice::class)->name("invoice");
