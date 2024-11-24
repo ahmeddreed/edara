@@ -32,7 +32,7 @@ class DataOfInvoice extends Model
 
     public function store() {
 
-        return $this->belongsTo(Store::class, 'material_id')->first();
+        return $this->belongsTo(Store::class, 'store_id')->first();
     }
 
     public function invoice() {
