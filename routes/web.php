@@ -1,7 +1,9 @@
 <?php
+use App\Models\User;
 use App\Livewire\Home;
 use App\Livewire\Invoice;
 use App\Livewire\Profile;
+use App\Livewire\ShowItems;
 use App\Livewire\Auth\login;
 use App\Livewire\ItemDetails;
 use App\Http\Controllers\logout;
@@ -16,6 +18,7 @@ use App\Livewire\Dashboard\SalesTable;
 use App\Livewire\Dashboard\StaffTable;
 use App\Livewire\Dashboard\StoreTable;
 use App\Livewire\Auth\CustomerRegister;
+use Illuminate\Support\Facades\Artisan;
 use App\Livewire\Dashboard\IMFOperation;
 use App\Livewire\Dashboard\SectionTable;
 use App\Livewire\Dashboard\StaffProfile;
@@ -23,7 +26,6 @@ use App\Livewire\Dashboard\CategoryTable;
 use App\Livewire\Dashboard\CustomerTable;
 use App\Livewire\Dashboard\MaterialTable;
 use App\Livewire\Dashboard\InvoiceProcessing;
-use App\Livewire\ShowItems;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,9 +39,33 @@ use App\Livewire\ShowItems;
 |
 */
 
-Route::get("home/{id?}",Home::class)->name("home");
-Route::get("show-items/{id}",ShowItems::class)->name("showItems");
+
+Route::get("home",function(){
+    return redirect("Dashboard");
+ })->name("home");
+
+Route::get("run-migrate",function(){
+    $users = User::all();
+    if( $users->count() < 1){
+        Artisan::call('optimize:clear');
+        Artisan::call('migrate:refresh --seed');
+        return "Migration Done";
+    }
+
+    try {
+        //code...
+        return "migrated";
+    } catch (\Exception $e) {
+        //throw $th;
+        Artisan::call('optimize:clear');
+        Artisan::call('migrate:refresh --seed');
+        return "Migration Done";
+    }
+})->name("run-migrate");
+
+// Route::get("home/{id?}",Home::class)->name("home");
 // Route::get("/{id}",Home::class)->name("home");
+Route::get("show-items/{id}",ShowItems::class)->name("showItems");
 Route::get("/invoice",Invoice::class)->name("invoice");
 Route::get("/customer-profile",Profile::class)->name("customer-profile")->middleware("customerAuth");
 Route::get("/detaile/{id}",ItemDetails::class)->name("detaile");
